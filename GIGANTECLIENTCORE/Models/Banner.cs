@@ -5,7 +5,7 @@ namespace GIGANTECLIENTCORE.Models;
 
 public partial class Banner
 {
-    public int Id { get; set; }
+    public int Id  { get; set; }
 
     public string ImageUrl { get; set; } = null!;
 
