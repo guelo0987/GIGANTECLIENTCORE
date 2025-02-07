@@ -1,0 +1,6 @@
+@GIGANTECLIENTCORE_HostAddress = http://localhost:5204
+
+GET {{GIGANTECLIENTCORE_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
