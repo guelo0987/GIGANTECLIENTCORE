@@ -1374,3 +1374,203 @@ WHERE [u].[Email] = @__loginRequest_Mail_0
 2025-02-07 13:38:00.930 -04:00 [INF] Application is shutting down...
 2025-02-07 13:38:00.931 -04:00 [DBG] Hosting stopping
 2025-02-07 13:38:00.941 -04:00 [DBG] Hosting stopped
+2025-02-07 14:20:19.187 -04:00 [DBG] Registered model binder providers, in the following order: ["Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BinderTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ServicesModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BodyModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.HeaderModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FloatingPointTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.EnumTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.DateTimeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.SimpleTypeModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.TryParseModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.CancellationTokenModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ByteArrayModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FormFileModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.FormCollectionModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.KeyValuePairModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.DictionaryModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ArrayModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.CollectionModelBinderProvider","Microsoft.AspNetCore.Mvc.ModelBinding.Binders.ComplexObjectModelBinderProvider"]
+2025-02-07 14:20:19.237 -04:00 [DBG] Hosting starting
+2025-02-07 14:20:19.241 -04:00 [INF] User profile is available. Using '/Users/miguelcruz/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2025-02-07 14:20:19.249 -04:00 [DBG] Reading data from file '/Users/miguelcruz/.aspnet/DataProtection-Keys/key-0ae3189b-af9d-4451-acd4-c0887b45683f.xml'.
+2025-02-07 14:20:19.252 -04:00 [DBG] Reading data from file '/Users/miguelcruz/.aspnet/DataProtection-Keys/key-b06a4e2e-7908-41eb-9b39-8691b777fc93.xml'.
+2025-02-07 14:20:19.253 -04:00 [DBG] Reading data from file '/Users/miguelcruz/.aspnet/DataProtection-Keys/key-0973fb41-bb8a-4795-8d60-a09f5171ead7.xml'.
+2025-02-07 14:20:19.254 -04:00 [DBG] Reading data from file '/Users/miguelcruz/.aspnet/DataProtection-Keys/key-257ca34e-0329-4b0c-83c2-d560c11773b1.xml'.
+2025-02-07 14:20:19.255 -04:00 [DBG] Found key {0ae3189b-af9d-4451-acd4-c0887b45683f}.
+2025-02-07 14:20:19.257 -04:00 [DBG] Found key {b06a4e2e-7908-41eb-9b39-8691b777fc93}.
+2025-02-07 14:20:19.257 -04:00 [DBG] Found key {0973fb41-bb8a-4795-8d60-a09f5171ead7}.
+2025-02-07 14:20:19.257 -04:00 [DBG] Found key {257ca34e-0329-4b0c-83c2-d560c11773b1}.
+2025-02-07 14:20:19.260 -04:00 [DBG] Considering key {0973fb41-bb8a-4795-8d60-a09f5171ead7} with expiration date 2025-03-03 15:16:45Z as default key.
+2025-02-07 14:20:19.261 -04:00 [DBG] Forwarded activator type request from Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60 to Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60
+2025-02-07 14:20:19.263 -04:00 [DBG] Using managed symmetric algorithm 'System.Security.Cryptography.Aes'.
+2025-02-07 14:20:19.264 -04:00 [DBG] Using managed keyed hash algorithm 'System.Security.Cryptography.HMACSHA256'.
+2025-02-07 14:20:19.265 -04:00 [DBG] Using key {0973fb41-bb8a-4795-8d60-a09f5171ead7} as the default key.
+2025-02-07 14:20:19.265 -04:00 [DBG] Key ring with default key {0973fb41-bb8a-4795-8d60-a09f5171ead7} was loaded during application startup.
+2025-02-07 14:20:19.289 -04:00 [DBG] Middleware configuration started with options: {AllowedHosts = *, AllowEmptyHosts = True, IncludeFailureMessage = True}
+2025-02-07 14:20:19.291 -04:00 [DBG] Wildcard detected, all requests with hosts will be allowed.
+2025-02-07 14:20:19.295 -04:00 [INF] Now listening on: http://localhost:5204
+2025-02-07 14:20:19.295 -04:00 [DBG] Loaded hosting startup assembly GIGANTECLIENTCORE
+2025-02-07 14:20:19.295 -04:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-02-07 14:20:19.295 -04:00 [INF] Hosting environment: Development
+2025-02-07 14:20:19.295 -04:00 [INF] Content root path: /Users/miguelcruz/Desktop/GIGANTECLIENTCORE/GIGANTECLIENTCORE
+2025-02-07 14:20:19.295 -04:00 [DBG] Hosting started
+2025-02-07 14:20:49.986 -04:00 [DBG] Connection id "0HNA7KGJ5C76N" accepted.
+2025-02-07 14:20:49.987 -04:00 [DBG] Connection id "0HNA7KGJ5C76O" accepted.
+2025-02-07 14:20:49.987 -04:00 [DBG] Connection id "0HNA7KGJ5C76N" started.
+2025-02-07 14:20:49.987 -04:00 [DBG] Connection id "0HNA7KGJ5C76O" started.
+2025-02-07 14:20:50.006 -04:00 [INF] Request starting HTTP/1.1 GET http://localhost:5204/swagger/index.html - null null
+2025-02-07 14:20:50.100 -04:00 [DBG] Connection id "0HNA7KGJ5C76N" completed keep alive response.
+2025-02-07 14:20:50.101 -04:00 [INF] Request finished HTTP/1.1 GET http://localhost:5204/swagger/index.html - 200 null text/html;charset=utf-8 96.2843ms
+2025-02-07 14:20:50.163 -04:00 [INF] Request starting HTTP/1.1 GET http://localhost:5204/swagger/index.js - null null
+2025-02-07 14:20:50.165 -04:00 [DBG] Connection id "0HNA7KGJ5C76N" completed keep alive response.
+2025-02-07 14:20:50.165 -04:00 [INF] Request finished HTTP/1.1 GET http://localhost:5204/swagger/index.js - 200 null application/javascript;charset=utf-8 1.6387ms
+2025-02-07 14:20:50.222 -04:00 [INF] Request starting HTTP/1.1 GET http://localhost:5204/swagger/v1/swagger.json - null null
+2025-02-07 14:20:50.228 -04:00 [DBG] Executing API description provider 'EndpointMetadataApiDescriptionProvider' from assembly Microsoft.AspNetCore.Mvc.ApiExplorer v9.0.0.0.
+2025-02-07 14:20:50.228 -04:00 [DBG] Executing API description provider 'DefaultApiDescriptionProvider' from assembly Microsoft.AspNetCore.Mvc.ApiExplorer v9.0.0.0.
+2025-02-07 14:20:50.230 -04:00 [DBG] Executing API description provider 'JsonPatchOperationsArrayProvider' from assembly Microsoft.AspNetCore.Mvc.NewtonsoftJson v9.0.1.0.
+2025-02-07 14:20:50.300 -04:00 [DBG] Connection id "0HNA7KGJ5C76N" completed keep alive response.
+2025-02-07 14:20:50.300 -04:00 [INF] Request finished HTTP/1.1 GET http://localhost:5204/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 78.0343ms
+2025-02-07 14:20:53.253 -04:00 [INF] Request starting HTTP/1.1 GET http://localhost:5204/api/Banner - null null
+2025-02-07 14:20:53.257 -04:00 [DBG] The request path  does not match the path filter
+2025-02-07 14:20:53.284 -04:00 [DBG] 1 candidate(s) found for the request path '/api/Banner'
+2025-02-07 14:20:53.285 -04:00 [DBG] Endpoint 'GIGANTECLIENTCORE.Controllers.BannerController.GetBanner (GIGANTECLIENTCORE)' with route pattern 'api/Banner' is valid for the request path '/api/Banner'
+2025-02-07 14:20:53.285 -04:00 [DBG] Request matched endpoint 'GIGANTECLIENTCORE.Controllers.BannerController.GetBanner (GIGANTECLIENTCORE)'
+2025-02-07 14:20:53.287 -04:00 [WRN] Failed to determine the https port for redirect.
+2025-02-07 14:20:53.311 -04:00 [DBG] AuthenticationScheme: Bearer was not authenticated.
+2025-02-07 14:20:53.312 -04:00 [INF] Executing endpoint 'GIGANTECLIENTCORE.Controllers.BannerController.GetBanner (GIGANTECLIENTCORE)'
+2025-02-07 14:20:53.320 -04:00 [INF] Route matched with {action = "GetBanner", controller = "Banner"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult GetBanner() on controller GIGANTECLIENTCORE.Controllers.BannerController (GIGANTECLIENTCORE).
+2025-02-07 14:20:53.322 -04:00 [DBG] Execution plan of authorization filters (in the following order): ["None"]
+2025-02-07 14:20:53.322 -04:00 [DBG] Execution plan of resource filters (in the following order): ["None"]
+2025-02-07 14:20:53.323 -04:00 [DBG] Execution plan of action filters (in the following order): ["Microsoft.AspNetCore.Mvc.ModelBinding.UnsupportedContentTypeFilter (Order: -3000)","Microsoft.AspNetCore.Mvc.Infrastructure.ModelStateInvalidFilter (Order: -2000)"]
+2025-02-07 14:20:53.323 -04:00 [DBG] Execution plan of exception filters (in the following order): ["None"]
+2025-02-07 14:20:53.323 -04:00 [DBG] Execution plan of result filters (in the following order): ["Microsoft.AspNetCore.Mvc.Infrastructure.ClientErrorResultFilter (Order: -2000)"]
+2025-02-07 14:20:53.324 -04:00 [DBG] Executing controller factory for controller GIGANTECLIENTCORE.Controllers.BannerController (GIGANTECLIENTCORE)
+2025-02-07 14:20:53.398 -04:00 [DBG] An 'IServiceProvider' was created for internal use by Entity Framework.
+2025-02-07 14:20:53.415 -04:00 [DBG] Executed controller factory for controller GIGANTECLIENTCORE.Controllers.BannerController (GIGANTECLIENTCORE)
+2025-02-07 14:20:53.417 -04:00 [INF] Executing action method GIGANTECLIENTCORE.Controllers.BannerController.GetBanner (GIGANTECLIENTCORE) - Validation state: "Valid"
+2025-02-07 14:20:53.614 -04:00 [DBG] Connection id "0HNA7KGJ5C76O" received FIN.
+2025-02-07 14:20:53.615 -04:00 [DBG] Connection id "0HNA7KGJ5C76O" sending FIN because: "The Socket transport's send loop completed gracefully."
+2025-02-07 14:20:53.617 -04:00 [DBG] Connection id "0HNA7KGJ5C76O" disconnecting.
+2025-02-07 14:20:53.618 -04:00 [DBG] Connection id "0HNA7KGJ5C76O" stopped.
+2025-02-07 14:20:53.917 -04:00 [DBG] Entity Framework Core 9.0.1 initialized 'MyDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:9.0.1' with options: EngineType=SqlServer 
+2025-02-07 14:20:53.945 -04:00 [DBG] Compiling query expression: 
+'DbSet<Banner>()
+    .OrderBy(b => b.OrderIndex)'
+2025-02-07 14:20:54.130 -04:00 [DBG] Generated query execution expression: 
+'queryContext => SingleQueryingEnumerable.Create<Banner>(
+    relationalQueryContext: (RelationalQueryContext)queryContext, 
+    relationalCommandResolver: parameters => [LIFTABLE Constant: RelationalCommandCache.QueryExpression(
+        Projection Mapping:
+            EmptyProjectionMember -> Dictionary<IProperty, int> { [Property: Banner.Id (int) Required PK AfterSave:Throw ValueGenerated.OnAdd, 0], [Property: Banner.Active (bool) Required, 1], [Property: Banner.CreatedAt (DateTime) Required, 2], [Property: Banner.ImageUrl (string) Required, 3], [Property: Banner.OrderIndex (int) Required, 4] }
+        SELECT b.Id, b.Active, b.CreatedAt, b.ImageUrl, b.OrderIndex
+        FROM Banners AS b
+        ORDER BY b.OrderIndex ASC) | Resolver: c => new RelationalCommandCache(
+        c.Dependencies.MemoryCache, 
+        c.RelationalDependencies.QuerySqlGeneratorFactory, 
+        c.RelationalDependencies.RelationalParameterBasedSqlProcessorFactory, 
+        Projection Mapping:
+            EmptyProjectionMember -> Dictionary<IProperty, int> { [Property: Banner.Id (int) Required PK AfterSave:Throw ValueGenerated.OnAdd, 0], [Property: Banner.Active (bool) Required, 1], [Property: Banner.CreatedAt (DateTime) Required, 2], [Property: Banner.ImageUrl (string) Required, 3], [Property: Banner.OrderIndex (int) Required, 4] }
+        SELECT b.Id, b.Active, b.CreatedAt, b.ImageUrl, b.OrderIndex
+        FROM Banners AS b
+        ORDER BY b.OrderIndex ASC, 
+        False, 
+        new HashSet<string>(
+            new string[]{ }, 
+            StringComparer.Ordinal
+        )
+    )].GetRelationalCommandTemplate(parameters), 
+    readerColumns: null, 
+    shaper: (queryContext, dataReader, resultContext, resultCoordinator) => 
+    {
+        Banner entity;
+        entity = 
+        {
+            MaterializationContext materializationContext1;
+            IEntityType entityType1;
+            Banner instance1;
+            InternalEntityEntry entry1;
+            bool hasNullKey1;
+            materializationContext1 = new MaterializationContext(
+                [LIFTABLE Constant: ValueBuffer | Resolver: _ => (object)ValueBuffer.Empty], 
+                queryContext.Context
+            );
+            instance1 = default(Banner);
+            entry1 = queryContext.TryGetEntry(
+                key: [LIFTABLE Constant: Key: Banner.Id PK | Resolver: c => c.Dependencies.Model.FindEntityType("GIGANTECLIENTCORE.Models.Banner").FindPrimaryKey()], 
+                keyValues: new object[]{ (object)dataReader.GetInt32(0) }, 
+                throwOnNullKey: True, 
+                hasNullKey: hasNullKey1);
+            !(hasNullKey1) ? entry1 != default(InternalEntityEntry) ? 
+            {
+                entityType1 = entry1.EntityType;
+                return instance1 = (Banner)entry1.Entity;
+            } : 
+            {
+                ISnapshot shadowSnapshot1;
+                shadowSnapshot1 = [LIFTABLE Constant: Snapshot | Resolver: _ => Snapshot.Empty];
+                entityType1 = [LIFTABLE Constant: EntityType: Banner | Resolver: namelessParameter{0} => namelessParameter{0}.Dependencies.Model.FindEntityType("GIGANTECLIENTCORE.Models.Banner")];
+                instance1 = switch (entityType1)
+                {
+                    case [LIFTABLE Constant: EntityType: Banner | Resolver: namelessParameter{1} => namelessParameter{1}.Dependencies.Model.FindEntityType("GIGANTECLIENTCORE.Models.Banner")]: 
+                        {
+                            return 
+                            {
+                                Banner instance;
+                                instance = new Banner();
+                                instance.<Id>k__BackingField = dataReader.GetInt32(0);
+                                instance.<Active>k__BackingField = dataReader.GetBoolean(1);
+                                instance.<CreatedAt>k__BackingField = dataReader.GetDateTime(2);
+                                instance.<ImageUrl>k__BackingField = dataReader.GetString(3);
+                                instance.<OrderIndex>k__BackingField = dataReader.GetInt32(4);
+                                (instance is IInjectableService) ? ((IInjectableService)instance).Injected(
+                                    context: materializationContext1.Context, 
+                                    entity: instance, 
+                                    queryTrackingBehavior: TrackAll, 
+                                    structuralType: [LIFTABLE Constant: EntityType: Banner | Resolver: namelessParameter{2} => namelessParameter{2}.Dependencies.Model.FindEntityType("GIGANTECLIENTCORE.Models.Banner")]) : default(void);
+                                return instance;
+                            }}
+                    default: 
+                        default(Banner)
+                }
+                ;
+                entry1 = entityType1 == default(IEntityType) ? default(InternalEntityEntry) : queryContext.StartTracking(
+                    entityType: entityType1, 
+                    entity: instance1, 
+                    snapshot: shadowSnapshot1);
+                return instance1;
+            } : default(void);
+            return instance1;
+        };
+        return entity;
+    }, 
+    contextType: GIGANTECLIENTCORE.Context.MyDbContext, 
+    standAloneStateManager: False, 
+    detailedErrorsEnabled: False, 
+    threadSafetyChecksEnabled: True)'
+2025-02-07 14:20:54.148 -04:00 [DBG] Creating DbConnection.
+2025-02-07 14:20:54.163 -04:00 [DBG] Created DbConnection. (13ms).
+2025-02-07 14:20:54.164 -04:00 [DBG] Opening connection to database 'GIGANTEAPIS' on server 'localhost'.
+2025-02-07 14:20:54.331 -04:00 [DBG] Opened connection to database 'GIGANTEAPIS' on server 'localhost'.
+2025-02-07 14:20:54.334 -04:00 [DBG] Creating DbCommand for 'ExecuteReader'.
+2025-02-07 14:20:54.338 -04:00 [DBG] Created DbCommand for 'ExecuteReader' (2ms).
+2025-02-07 14:20:54.339 -04:00 [DBG] Initialized DbCommand for 'ExecuteReader' (6ms).
+2025-02-07 14:20:54.343 -04:00 [DBG] Executing DbCommand [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [b].[Id], [b].[Active], [b].[CreatedAt], [b].[ImageUrl], [b].[OrderIndex]
+FROM [Banners] AS [b]
+ORDER BY [b].[OrderIndex]
+2025-02-07 14:20:54.371 -04:00 [INF] Executed DbCommand (27ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [b].[Id], [b].[Active], [b].[CreatedAt], [b].[ImageUrl], [b].[OrderIndex]
+FROM [Banners] AS [b]
+ORDER BY [b].[OrderIndex]
+2025-02-07 14:20:54.396 -04:00 [DBG] Context 'MyDbContext' started tracking 'Banner' entity. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see key values.
+2025-02-07 14:20:54.413 -04:00 [DBG] Context 'MyDbContext' started tracking 'Banner' entity. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see key values.
+2025-02-07 14:20:54.414 -04:00 [DBG] Closing data reader to 'GIGANTEAPIS' on server 'localhost'.
+2025-02-07 14:20:54.418 -04:00 [DBG] A data reader for 'GIGANTEAPIS' on server 'localhost' is being disposed after spending 43ms reading results.
+2025-02-07 14:20:54.420 -04:00 [DBG] Closing connection to database 'GIGANTEAPIS' on server 'localhost'.
+2025-02-07 14:20:54.424 -04:00 [DBG] Closed connection to database 'GIGANTEAPIS' on server 'localhost' (3ms).
+2025-02-07 14:20:54.426 -04:00 [INF] Executed action method GIGANTECLIENTCORE.Controllers.BannerController.GetBanner (GIGANTECLIENTCORE), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 1007.3489ms.
+2025-02-07 14:20:54.427 -04:00 [DBG] List of registered output formatters, in the following order: ["Microsoft.AspNetCore.Mvc.Formatters.HttpNoContentOutputFormatter","Microsoft.AspNetCore.Mvc.Formatters.StringOutputFormatter","Microsoft.AspNetCore.Mvc.Formatters.StreamOutputFormatter","Microsoft.AspNetCore.Mvc.Formatters.NewtonsoftJsonOutputFormatter","Microsoft.AspNetCore.Mvc.Formatters.XmlDataContractSerializerOutputFormatter"]
+2025-02-07 14:20:54.428 -04:00 [DBG] No information found on request to perform content negotiation.
+2025-02-07 14:20:54.428 -04:00 [DBG] Attempting to select an output formatter without using a content type as no explicit content types were specified for the response.
+2025-02-07 14:20:54.428 -04:00 [DBG] Attempting to select the first formatter in the output formatters list which can write the result.
+2025-02-07 14:20:54.429 -04:00 [DBG] Selected output formatter 'Microsoft.AspNetCore.Mvc.Formatters.NewtonsoftJsonOutputFormatter' and content type 'application/json' to write the response.
+2025-02-07 14:20:54.429 -04:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[GIGANTECLIENTCORE.Models.Banner, GIGANTECLIENTCORE, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-02-07 14:20:54.486 -04:00 [INF] Executed action GIGANTECLIENTCORE.Controllers.BannerController.GetBanner (GIGANTECLIENTCORE) in 1161.8994ms
+2025-02-07 14:20:54.486 -04:00 [INF] Executed endpoint 'GIGANTECLIENTCORE.Controllers.BannerController.GetBanner (GIGANTECLIENTCORE)'
+2025-02-07 14:20:54.486 -04:00 [DBG] Connection id "0HNA7KGJ5C76N" completed keep alive response.
+2025-02-07 14:20:54.487 -04:00 [DBG] 'MyDbContext' disposed.
+2025-02-07 14:20:54.489 -04:00 [DBG] Disposing connection to database 'GIGANTEAPIS' on server 'localhost'.
+2025-02-07 14:20:54.490 -04:00 [DBG] Disposed connection to database '' on server '' (0ms).
+2025-02-07 14:20:54.490 -04:00 [INF] Request finished HTTP/1.1 GET http://localhost:5204/api/Banner - 200 268 application/json; charset=utf-8 1237.6271ms
+2025-02-07 14:20:58.617 -04:00 [DBG] Connection id "0HNA7KGJ5C76N" received FIN.
+2025-02-07 14:20:58.620 -04:00 [DBG] Connection id "0HNA7KGJ5C76N" sending FIN because: "The Socket transport's send loop completed gracefully."
+2025-02-07 14:20:58.625 -04:00 [DBG] Connection id "0HNA7KGJ5C76N" disconnecting.
+2025-02-07 14:20:58.626 -04:00 [DBG] Connection id "0HNA7KGJ5C76N" stopped.
+2025-02-07 14:27:49.100 -04:00 [INF] Application is shutting down...
+2025-02-07 14:27:49.105 -04:00 [DBG] Hosting stopping
+2025-02-07 14:27:49.118 -04:00 [DBG] Hosting stopped
