@@ -28,12 +28,13 @@ public partial class UsuarioCliente
     public DateTime? FechaIngreso { get; set; }
 
     public int RolId { get; set; }
-
-    public virtual ICollection<Carrito> Carritos { get; set; } = new List<Carrito>();
+    
 
     public virtual ICollection<HistorialCorreo> HistorialCorreos { get; set; } = new List<HistorialCorreo>();
 
     public virtual Compañium? RncNavigation { get; set; }
+    
+    public virtual ICollection<Carrito> Carritos { get; set; } = new List<Carrito>();
 
     public virtual Role Rol { get; set; } = null!;
 

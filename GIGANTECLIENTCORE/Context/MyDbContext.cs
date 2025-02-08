@@ -19,8 +19,7 @@ public partial class MyDbContext : DbContext
     public virtual DbSet<Admin> Admins { get; set; }
 
     public virtual DbSet<Banner> Banners { get; set; }
-
-    public virtual DbSet<Carrito> Carritos { get; set; }
+    
 
     public virtual DbSet<Categorium> Categoria { get; set; }
 
@@ -41,6 +40,10 @@ public partial class MyDbContext : DbContext
     public virtual DbSet<SubCategorium> SubCategoria { get; set; }
 
     public virtual DbSet<UsuarioCliente> UsuarioClientes { get; set; }
+    
+    public virtual DbSet<DetalleCarrito> DetalleCarrito { get; set; }
+    
+    public virtual DbSet<Carrito> Carrito { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
@@ -70,26 +73,7 @@ public partial class MyDbContext : DbContext
                 .OnDelete(DeleteBehavior.SetNull);
         });
 
-        modelBuilder.Entity<Carrito>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PK__Carrito__3214EC0784CC7F99");
-
-            entity.ToTable("Carrito");
-
-            entity.HasIndex(e => e.ProductoId, "IX_Carrito_ProductoId");
-
-            entity.HasIndex(e => e.UsuarioId, "IX_Carrito_UsuarioId");
-
-            entity.HasOne(d => d.Producto).WithMany(p => p.Carritos)
-                .HasForeignKey(d => d.ProductoId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Carrito__Product__6C190EBB");
-
-            entity.HasOne(d => d.Usuario).WithMany(p => p.Carritos)
-                .HasForeignKey(d => d.UsuarioId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Carrito__Usuario__46E78A0C");
-        });
+        
 
         modelBuilder.Entity<Categorium>(entity =>
         {

@@ -7393,3 +7393,9 @@ VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10);
 2025-02-07 20:12:41.066 -04:00 [DBG] Disposing connection to database 'GIGANTEAPIS' on server 'localhost'.
 2025-02-07 20:12:41.067 -04:00 [DBG] Disposed connection to database '' on server '' (0ms).
 2025-02-07 20:12:41.067 -04:00 [INF] Request finished HTTP/1.1 POST http://localhost:5204/api/Auth/register - 200 623 application/json; charset=utf-8 2778.8643ms
+2025-02-07 20:14:19.154 -04:00 [INF] Application is shutting down...
+2025-02-07 20:14:19.161 -04:00 [DBG] Hosting stopping
+2025-02-07 20:14:19.183 -04:00 [DBG] Connection id "0HNA7QL5TKLAB" disconnecting.
+2025-02-07 20:14:19.184 -04:00 [DBG] Connection id "0HNA7QL5TKLAB" stopped.
+2025-02-07 20:14:19.185 -04:00 [DBG] Connection id "0HNA7QL5TKLAB" sending FIN because: "The Socket transport's send loop completed gracefully."
+2025-02-07 20:14:19.189 -04:00 [DBG] Hosting stopped

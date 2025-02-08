@@ -18,12 +18,11 @@ public partial class Producto
     public string? ImageUrl { get; set; }
 
     public int? CategoriaId { get; set; }
-
-    public virtual ICollection<Carrito> Carritos { get; set; } = new List<Carrito>();
+    
 
     public virtual Categorium? Categoria { get; set; }
 
     public virtual ICollection<DetalleSolicitud> DetalleSolicituds { get; set; } = new List<DetalleSolicitud>();
-
+    public virtual ICollection<DetalleCarrito> DetallesCarrito { get; set; } = new List<DetalleCarrito>();
     public virtual SubCategorium SubCategoria { get; set; } = null!;
 }

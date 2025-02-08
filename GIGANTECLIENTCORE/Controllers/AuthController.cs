@@ -83,7 +83,7 @@ namespace GIGANTECLIENTCORE.Controllers
         }
 
        [HttpPost("register")]
-public IActionResult Register([FromBody] RegisterDTO registerRequest)
+public async Task<IActionResult> Register([FromBody] RegisterDTO registerRequest)
 {
     // Verificar si el correo ya está registrado
     if (_db.UsuarioClientes.Any(u => u.Email == registerRequest.Email))
@@ -120,8 +120,8 @@ public IActionResult Register([FromBody] RegisterDTO registerRequest)
     // Si se envía el RNC, consultar la API de la DGII para obtener información de la compañía
     if (!string.IsNullOrWhiteSpace(registerRequest.Rnc))
     {
-        var dgiService = new DgiiService();
-        string nombre = dgiService.ConsultarContribuyente(registerRequest.Rnc);
+        var gestionoApi = new DgiiService();
+        string nombre = await gestionoApi.ConsultarContribuyenteAsync(registerRequest.Rnc);
 
         var comp = new Compañium
         {
@@ -130,10 +130,7 @@ public IActionResult Register([FromBody] RegisterDTO registerRequest)
         };
 
         _db.Compañia.Add(comp);
-        _db.SaveChanges();
-
-        
-        
+        await _db.SaveChangesAsync();
     }
     _db.UsuarioClientes.Add(usuario);
     _db.SaveChanges();

@@ -1,19 +1,17 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
-namespace GIGANTECLIENTCORE.Models;
-
-public partial class Carrito
+namespace GIGANTECLIENTCORE.Models
 {
-    public int Id { get; set; }
+    public partial class Carrito
+    {
+        public int Id { get; set; }
+        public int UsuarioId { get; set; } // Solo para usuarios registrados
+        
+        // Relación con UsuarioCliente
+        public virtual UsuarioCliente Usuario { get; set; } = null!;
 
-    public int UsuarioId { get; set; }
-
-    public int ProductoId { get; set; }
-
-    public int Cantidad { get; set; }
-
-    public virtual Producto Producto { get; set; } = null!;
-
-    public virtual UsuarioCliente Usuario { get; set; } = null!;
+        // Relación con DetalleCarrito
+        public virtual ICollection<DetalleCarrito> DetallesCarrito { get; set; } = new List<DetalleCarrito>();
+    }
 }
