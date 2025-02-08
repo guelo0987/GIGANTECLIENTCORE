@@ -182,3 +182,5 @@
 /Users/miguelcruz/Desktop/GIGANTECLIENTCORE/GIGANTECLIENTCORE/obj/Debug/net9.0/GIGANTECLIENTCORE.genruntimeconfig.cache
 /Users/miguelcruz/Desktop/GIGANTECLIENTCORE/GIGANTECLIENTCORE/obj/Debug/net9.0/ref/GIGANTECLIENTCORE.dll
 /Users/miguelcruz/Desktop/GIGANTECLIENTCORE/GIGANTECLIENTCORE/obj/Debug/net9.0/GIGANTECLIENTCORE.sourcelink.json
+/Users/miguelcruz/Desktop/GIGANTECLIENTCORE/GIGANTECLIENTCORE/bin/Debug/net9.0/HtmlAgilityPack.dll
+/Users/miguelcruz/Desktop/GIGANTECLIENTCORE/GIGANTECLIENTCORE/bin/Debug/net9.0/Octetus.ConsultasDgii.dll
