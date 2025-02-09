@@ -64,12 +64,16 @@ public class SolicitudesController:ControllerBase
 
 
     [HttpGet("SolicitudesUsuario/{id}")]
-    public IActionResult GetSolicitudesUsuario(int id)
+    public async Task<IActionResult> GetSolicitudesUsuario(int id)
     {
-        var solicitudesUsuario = _db.Solicituds
-            .Include(o => o.Usuario).Include(o=>o.DetalleSolicituds)
-            .ThenInclude(l=>l.Producto).ThenInclude(l=>l.Categoria).ThenInclude(l=>l.SubCategoria)
-            .Where(o => o.UsuarioId == id);
+        var solicitudesUsuario = await _db.Solicituds
+            .Include(o => o.Usuario)
+            .Include(o => o.DetalleSolicituds)
+            .ThenInclude(l => l.Producto)
+            .ThenInclude(l => l.Categoria)
+            .ThenInclude(l => l.SubCategoria)
+            .Where(o => o.UsuarioId == id)
+            .ToListAsync();
 
         if (!solicitudesUsuario.Any())
         {
@@ -78,7 +82,6 @@ public class SolicitudesController:ControllerBase
         }
 
         return Ok(solicitudesUsuario);
-
     }
     
 }

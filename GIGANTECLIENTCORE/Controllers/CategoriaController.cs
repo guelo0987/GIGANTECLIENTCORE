@@ -9,33 +9,33 @@ namespace GIGANTECLIENTCORE.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class CategoriaController:ControllerBase
+public class CategoriaController : ControllerBase
 {
-
     private readonly ILogger<CategoriaController> _logger;
     private readonly MyDbContext _db;
     
-
     public CategoriaController(MyDbContext db, ILogger<CategoriaController> logger)
     {
         _logger = logger;
         _db = db;
     }
     
-    
     [HttpGet]
-    public IActionResult GetCategorias()
+    public async Task<IActionResult> GetCategorias()
     {
         _logger.LogInformation("Obteniendo Categorias...");
-        return Ok(_db.Categoria.Include(o=>o.SubCategoria).ToList());
+        var categorias = await _db.Categoria
+            .Include(o => o.SubCategoria)
+            .ToListAsync();
+        return Ok(categorias);
     }
     
-    
     [HttpGet("{id}")]
-    public IActionResult GetCategoriaId(int id)
+    public async Task<IActionResult> GetCategoriaId(int id)
     {
-        var categorium = _db.Categoria
-            .Include(o=>o.SubCategoria).FirstOrDefault(u => u.Id == id);
+        var categorium = await _db.Categoria
+            .Include(o => o.SubCategoria)
+            .FirstOrDefaultAsync(u => u.Id == id);
 
         if (categorium == null)
         {
@@ -45,5 +45,4 @@ public class CategoriaController:ControllerBase
 
         return Ok(categorium);
     }
-
 }

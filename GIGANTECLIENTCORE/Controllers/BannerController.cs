@@ -6,27 +6,23 @@ namespace GIGANTECLIENTCORE.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class BannerController:ControllerBase
+public class BannerController : ControllerBase
 {
-    
-    
     private readonly MyDbContext _db;
     private readonly ILogger<BannerController> _logger;
+    
     public BannerController(MyDbContext db, ILogger<BannerController> logger)
     {
         _logger = logger;
         _db = db;
-        
     }
-    
     
     [HttpGet]
-    public IActionResult GetBanner()
+    public async Task<IActionResult> GetBanner()
     {
         _logger.LogInformation("Obteniendo Imagenes...");
-        return Ok(new AdminMultiMedia(_db).GetImages());
+        var adminMultiMedia = new AdminMultiMedia(_db);
+        var images = await Task.Run(() => adminMultiMedia.GetImages());
+        return Ok(images);
     }
-
-    
-    
 }

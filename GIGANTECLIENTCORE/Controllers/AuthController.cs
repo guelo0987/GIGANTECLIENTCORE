@@ -31,11 +31,11 @@ namespace GIGANTECLIENTCORE.Controllers
         }
 
         [HttpPost("login")]
-        public IActionResult Login([FromBody] LoginRequest loginRequest)
+        public async Task<IActionResult> Login([FromBody] LoginRequest loginRequest)
         {
-            var client = _db.UsuarioClientes
+            var client = await _db.UsuarioClientes
                 .Include(o => o.Rol)
-                .FirstOrDefault(o => o.Email == loginRequest.Mail);
+                .FirstOrDefaultAsync(o => o.Email == loginRequest.Mail);
 
             if (client == null)
             {

@@ -25,19 +25,18 @@ namespace GIGANTECLIENTCORE.Controllers
 
 
         [HttpGet]
-        public IActionResult ObtenerCarritoUsario(int id)
+        public async Task<IActionResult> ObtenerCarritoUsario(int id)
         {
-            
-            
-            var cart = _db.Carrito
-                .Include(o=>o.Usuario)
+            var cart = await _db.Carrito
+                .Include(o => o.Usuario)
                 .Include(o => o.DetallesCarrito)
                 .ThenInclude(l => l.Producto)
                 .ThenInclude(l => l.Categoria)
-                .ThenInclude(o=>o.SubCategoria).Where(o=>o.UsuarioId==id);
+                .ThenInclude(o => o.SubCategoria)
+                .Where(o => o.UsuarioId == id)
+                .ToListAsync();
 
             return Ok(cart);
-
         }
 
         // 📌 Agregar producto al carrito con usuario enviado en el request
