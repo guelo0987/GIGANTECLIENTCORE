@@ -86,5 +86,24 @@ public class ProductoController : ControllerBase
         return Ok(productos);
     }
     
+    //Productos por Marca 
+    [HttpGet("pormarca")]
+    public async Task<IActionResult> GetProductosByMarca(string marca)
+    {
+        var productos = await _db.Productos
+            .Include(s => s.Categoria)
+            .Include(s => s.SubCategoria)
+            .Where(s => s.Marca == marca.ToLower())
+            .ToListAsync();
+    
+        if (!productos.Any())
+        {
+            _logger.LogInformation($"No se encontraron Marcas en el Producto con la marca proporcionada", marca);
+            return NotFound($"No se encontraron Productos para la marca  {marca}.");
+        }
+    
+        return Ok(productos);
+    }
+    
     
 }
