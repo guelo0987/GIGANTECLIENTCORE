@@ -21,6 +21,8 @@ public partial class Producto
     
     public string? Descripcion { get; set; }
     
+    public bool? EsDestacado { get; set; }
+    
 
     public virtual Categorium? Categoria { get; set; }
 

@@ -104,6 +104,47 @@ public class ProductoController : ControllerBase
     
         return Ok(productos);
     }
+    // Endpoint para obtener productos destacados excluyendo cerámicas
+    [HttpGet("destacados/excluyendoCeramicas")]
+    public async Task<IActionResult> GetProductosDestacadosExcluyendoCeramicas()
+    {
+        var productos = await _db.Productos
+            .Include(p => p.Categoria)
+            .ThenInclude(c => c.SubCategoria)
+            .Where(p => p.EsDestacado == true 
+                        && !p.Categoria.Nombre.ToLower().Contains("cerámica"))
+            .ToListAsync();
+
+        if (!productos.Any())
+        {
+            _logger.LogInformation("No se encontraron productos destacados excluyendo cerámicas.");
+            return NotFound("No se encontraron productos destacados excluyendo cerámicas.");
+        }
+
+        return Ok(productos);
+    }
+
+    // Endpoint para obtener productos de la categoría cerámicas que están destacados
+    [HttpGet("destacados/ceramicas")]
+    public async Task<IActionResult> GetCeramicasDestacadas()
+    {
+        var productos = await _db.Productos
+            .Include(p => p.Categoria)
+            .ThenInclude(c => c.SubCategoria)
+            .Where(p => p.EsDestacado == true 
+                        && p.Categoria.Nombre.ToLower().Contains("cerámica"))
+            .ToListAsync();
+
+        if (!productos.Any())
+        {
+            _logger.LogInformation("No se encontraron productos destacados de cerámicas.");
+            return NotFound("No se encontraron productos destacados de cerámicas.");
+        }
+
+        return Ok(productos);
+    }
+    
+    
     
     
 }
