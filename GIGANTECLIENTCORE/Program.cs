@@ -9,6 +9,8 @@ using Microsoft.Extensions.FileProviders;
 using System.IO;
 using GIGANTECLIENTCORE.Context;
 using GIGANTECLIENTCORE.Utils;
+using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.OpenApi.Models;
 
 
@@ -118,7 +120,30 @@ builder.Services.AddCors(options =>
             .AllowCredentials());
 });
 
+
+builder.Services.Configure<FormOptions>(options =>
+{
+    options.MultipartBodyLengthLimit = 10485760; // 10MB
+});
+
+// En ConfigureServices
+builder.Services.Configure<ForwardedHeadersOptions>(options =>
+{
+    options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+});
+
+
+
+
 var app = builder.Build();
+
+// En Configure
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine("/Users/miguelcruz/ImageGigante/Curriculums")),
+    RequestPath = "/Curriculums"
+});
 
 if (app.Environment.IsDevelopment())
 {
