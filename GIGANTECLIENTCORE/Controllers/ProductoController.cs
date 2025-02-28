@@ -108,17 +108,19 @@ public class ProductoController : ControllerBase
     [HttpGet("destacados/excluyendoCeramicas")]
     public async Task<IActionResult> GetProductosDestacadosExcluyendoCeramicas()
     {
+        const int categoriaCeramicaId = 1006;
+    
         var productos = await _db.Productos
             .Include(p => p.Categoria)
             .ThenInclude(c => c.SubCategoria)
             .Where(p => p.EsDestacado == true 
-                        && !p.Categoria.Nombre.ToLower().Contains("cerámica"))
+                        && p.CategoriaId != categoriaCeramicaId)
             .ToListAsync();
 
         if (!productos.Any())
         {
-            _logger.LogInformation("No se encontraron productos destacados excluyendo cerámicas.");
-            return NotFound("No se encontraron productos destacados excluyendo cerámicas.");
+            _logger.LogInformation("No se encontraron productos destacados excluyendo categoría 1006");
+            return NotFound("No se encontraron productos destacados en otras categorías");
         }
 
         return Ok(productos);
@@ -128,21 +130,64 @@ public class ProductoController : ControllerBase
     [HttpGet("destacados/ceramicas")]
     public async Task<IActionResult> GetCeramicasDestacadas()
     {
+        const int categoriaCeramicaId = 1006;
+    
         var productos = await _db.Productos
             .Include(p => p.Categoria)
             .ThenInclude(c => c.SubCategoria)
             .Where(p => p.EsDestacado == true 
-                        && p.Categoria.Nombre.ToLower().Contains("cerámica"))
+                        && p.CategoriaId == categoriaCeramicaId)
             .ToListAsync();
 
         if (!productos.Any())
         {
-            _logger.LogInformation("No se encontraron productos destacados de cerámicas.");
-            return NotFound("No se encontraron productos destacados de cerámicas.");
+            _logger.LogInformation("No se encontraron productos destacados de la categoría 1006");
+            return NotFound("No se encontraron productos destacados en cerámicas");
         }
 
         return Ok(productos);
     }
+    [HttpGet("marcas/notceramicas")]
+    public async Task<IActionResult> GetMarcasExcluyendoCategoria1006()
+    {
+        const int categoriaCeramicaId = 1006; // ID de la categoría a excluir
+    
+        var marcas = await _db.Productos
+            .Where(p => p.CategoriaId != categoriaCeramicaId) // Filtramos por ID
+            .Select(p => p.Marca)
+            .Distinct()
+            .ToListAsync();
+
+        if (!marcas.Any())
+        {
+            _logger.LogInformation("No se encontraron marcas excluyendo categoría 1006");
+            return NotFound("No hay marcas disponibles para otras categorías");
+        }
+
+        return Ok(marcas);
+    }
+    
+    
+    [HttpGet("marcas/yesceramicas")]
+    public async Task<IActionResult> GetMarcasDeCeramicas()
+    {
+        const int categoriaCeramicaId = 1006;
+    
+        var marcas = await _db.Productos
+            .Where(p => p.CategoriaId == categoriaCeramicaId)
+            .Select(p => p.Marca)
+            .Distinct()
+            .ToListAsync();
+
+        if (!marcas.Any())
+        {
+            _logger.LogInformation("No se encontraron marcas en la categoría 1006");
+            return NotFound("No hay marcas registradas para cerámicas");
+        }
+
+        return Ok(marcas);
+    }
+
     
     
     

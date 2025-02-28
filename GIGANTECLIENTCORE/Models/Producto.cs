@@ -23,6 +23,8 @@ public partial class Producto
     
     public bool? EsDestacado { get; set; }
     
+    public string? Medidas { get; set; }
+    
 
     public virtual Categorium? Categoria { get; set; }
 
