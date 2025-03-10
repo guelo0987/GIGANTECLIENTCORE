@@ -1,0 +1,124 @@
+2025-02-10 00:17:53.357 -04:00 [DBG] Connection id "0HNA96JKKGP6I" accepted.
+2025-02-10 00:17:53.387 -04:00 [DBG] Connection id "0HNA96JKKGP6I" started.
+2025-02-10 00:17:53.388 -04:00 [INF] Request starting HTTP/1.1 GET http://localhost:5204/api/Banner - null null
+2025-02-10 00:17:53.388 -04:00 [DBG] The request path  does not match the path filter
+2025-02-10 00:17:53.388 -04:00 [DBG] 1 candidate(s) found for the request path '/api/Banner'
+2025-02-10 00:17:53.389 -04:00 [DBG] Endpoint 'GIGANTECLIENTCORE.Controllers.BannerController.GetBanner (GIGANTECLIENTCORE)' with route pattern 'api/Banner' is valid for the request path '/api/Banner'
+2025-02-10 00:17:53.389 -04:00 [DBG] Request matched endpoint 'GIGANTECLIENTCORE.Controllers.BannerController.GetBanner (GIGANTECLIENTCORE)'
+2025-02-10 00:17:53.389 -04:00 [DBG] The request has an origin header: 'http://localhost:5173'.
+2025-02-10 00:17:53.389 -04:00 [INF] CORS policy execution successful.
+2025-02-10 00:17:53.390 -04:00 [DBG] AuthenticationScheme: Bearer was not authenticated.
+2025-02-10 00:17:53.390 -04:00 [INF] Executing endpoint 'GIGANTECLIENTCORE.Controllers.BannerController.GetBanner (GIGANTECLIENTCORE)'
+2025-02-10 00:17:53.390 -04:00 [INF] Route matched with {action = "GetBanner", controller = "Banner"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetBanner() on controller GIGANTECLIENTCORE.Controllers.BannerController (GIGANTECLIENTCORE).
+2025-02-10 00:17:53.390 -04:00 [DBG] Execution plan of authorization filters (in the following order): ["None"]
+2025-02-10 00:17:53.390 -04:00 [DBG] Execution plan of resource filters (in the following order): ["None"]
+2025-02-10 00:17:53.391 -04:00 [DBG] Execution plan of action filters (in the following order): ["Microsoft.AspNetCore.Mvc.ModelBinding.UnsupportedContentTypeFilter (Order: -3000)","Microsoft.AspNetCore.Mvc.Infrastructure.ModelStateInvalidFilter (Order: -2000)"]
+2025-02-10 00:17:53.391 -04:00 [DBG] Execution plan of exception filters (in the following order): ["None"]
+2025-02-10 00:17:53.391 -04:00 [DBG] Execution plan of result filters (in the following order): ["Microsoft.AspNetCore.Mvc.Infrastructure.ClientErrorResultFilter (Order: -2000)"]
+2025-02-10 00:17:53.391 -04:00 [DBG] Executing controller factory for controller GIGANTECLIENTCORE.Controllers.BannerController (GIGANTECLIENTCORE)
+2025-02-10 00:17:53.392 -04:00 [DBG] Executed controller factory for controller GIGANTECLIENTCORE.Controllers.BannerController (GIGANTECLIENTCORE)
+2025-02-10 00:17:53.392 -04:00 [INF] Executing action method GIGANTECLIENTCORE.Controllers.BannerController.GetBanner (GIGANTECLIENTCORE) - Validation state: "Valid"
+2025-02-10 00:17:53.392 -04:00 [INF] Obteniendo Imagenes...
+2025-02-10 00:17:53.397 -04:00 [DBG] Entity Framework Core 9.0.1 initialized 'MyDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:9.0.1' with options: EngineType=SqlServer 
+2025-02-10 00:17:53.398 -04:00 [DBG] Creating DbConnection.
+2025-02-10 00:17:53.398 -04:00 [DBG] Created DbConnection. (0ms).
+2025-02-10 00:17:53.398 -04:00 [DBG] Opening connection to database 'GIGANTEAPIS' on server 'localhost'.
+2025-02-10 00:17:53.433 -04:00 [DBG] Opened connection to database 'GIGANTEAPIS' on server 'localhost'.
+2025-02-10 00:17:53.433 -04:00 [DBG] Creating DbCommand for 'ExecuteReader'.
+2025-02-10 00:17:53.433 -04:00 [DBG] Created DbCommand for 'ExecuteReader' (0ms).
+2025-02-10 00:17:53.433 -04:00 [DBG] Initialized DbCommand for 'ExecuteReader' (0ms).
+2025-02-10 00:17:53.433 -04:00 [DBG] Executing DbCommand [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [b].[Id], [b].[Active], [b].[CreatedAt], [b].[ImageUrl], [b].[OrderIndex]
+FROM [Banners] AS [b]
+ORDER BY [b].[OrderIndex]
+2025-02-10 00:17:53.438 -04:00 [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [b].[Id], [b].[Active], [b].[CreatedAt], [b].[ImageUrl], [b].[OrderIndex]
+FROM [Banners] AS [b]
+ORDER BY [b].[OrderIndex]
+2025-02-10 00:17:53.438 -04:00 [DBG] Context 'MyDbContext' started tracking 'Banner' entity. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see key values.
+2025-02-10 00:17:53.438 -04:00 [DBG] Context 'MyDbContext' started tracking 'Banner' entity. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see key values.
+2025-02-10 00:17:53.438 -04:00 [DBG] Closing data reader to 'GIGANTEAPIS' on server 'localhost'.
+2025-02-10 00:17:53.438 -04:00 [DBG] A data reader for 'GIGANTEAPIS' on server 'localhost' is being disposed after spending 0ms reading results.
+2025-02-10 00:17:53.438 -04:00 [DBG] Closing connection to database 'GIGANTEAPIS' on server 'localhost'.
+2025-02-10 00:17:53.438 -04:00 [DBG] Closed connection to database 'GIGANTEAPIS' on server 'localhost' (0ms).
+2025-02-10 00:17:53.438 -04:00 [INF] Executed action method GIGANTECLIENTCORE.Controllers.BannerController.GetBanner (GIGANTECLIENTCORE), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 46.0654ms.
+2025-02-10 00:17:53.439 -04:00 [DBG] List of registered output formatters, in the following order: ["Microsoft.AspNetCore.Mvc.Formatters.HttpNoContentOutputFormatter","Microsoft.AspNetCore.Mvc.Formatters.StringOutputFormatter","Microsoft.AspNetCore.Mvc.Formatters.StreamOutputFormatter","Microsoft.AspNetCore.Mvc.Formatters.NewtonsoftJsonOutputFormatter","Microsoft.AspNetCore.Mvc.Formatters.XmlDataContractSerializerOutputFormatter"]
+2025-02-10 00:17:53.439 -04:00 [DBG] No information found on request to perform content negotiation.
+2025-02-10 00:17:53.439 -04:00 [DBG] Attempting to select an output formatter without using a content type as no explicit content types were specified for the response.
+2025-02-10 00:17:53.439 -04:00 [DBG] Attempting to select the first formatter in the output formatters list which can write the result.
+2025-02-10 00:17:53.439 -04:00 [DBG] Selected output formatter 'Microsoft.AspNetCore.Mvc.Formatters.NewtonsoftJsonOutputFormatter' and content type 'application/json' to write the response.
+2025-02-10 00:17:53.439 -04:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[GIGANTECLIENTCORE.Models.Banner, GIGANTECLIENTCORE, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-02-10 00:17:53.439 -04:00 [INF] Executed action GIGANTECLIENTCORE.Controllers.BannerController.GetBanner (GIGANTECLIENTCORE) in 48.4816ms
+2025-02-10 00:17:53.439 -04:00 [INF] Executed endpoint 'GIGANTECLIENTCORE.Controllers.BannerController.GetBanner (GIGANTECLIENTCORE)'
+2025-02-10 00:17:53.439 -04:00 [DBG] Connection id "0HNA96JKKGP6I" completed keep alive response.
+2025-02-10 00:17:53.440 -04:00 [DBG] 'MyDbContext' disposed.
+2025-02-10 00:17:53.440 -04:00 [DBG] Disposing connection to database 'GIGANTEAPIS' on server 'localhost'.
+2025-02-10 00:17:53.440 -04:00 [DBG] Disposed connection to database '' on server '' (0ms).
+2025-02-10 00:17:53.440 -04:00 [INF] Request finished HTTP/1.1 GET http://localhost:5204/api/Banner - 200 268 application/json; charset=utf-8 52.1504ms
+2025-02-10 00:17:53.441 -04:00 [INF] Request starting HTTP/1.1 GET http://localhost:5204/api/Banner - null null
+2025-02-10 00:17:53.441 -04:00 [DBG] The request path  does not match the path filter
+2025-02-10 00:17:53.441 -04:00 [DBG] 1 candidate(s) found for the request path '/api/Banner'
+2025-02-10 00:17:53.441 -04:00 [DBG] Endpoint 'GIGANTECLIENTCORE.Controllers.BannerController.GetBanner (GIGANTECLIENTCORE)' with route pattern 'api/Banner' is valid for the request path '/api/Banner'
+2025-02-10 00:17:53.441 -04:00 [DBG] Connection id "0HNA96JKKGP6J" accepted.
+2025-02-10 00:17:53.441 -04:00 [DBG] Connection id "0HNA96JKKGP6J" started.
+2025-02-10 00:17:53.441 -04:00 [DBG] Request matched endpoint 'GIGANTECLIENTCORE.Controllers.BannerController.GetBanner (GIGANTECLIENTCORE)'
+2025-02-10 00:17:53.441 -04:00 [DBG] The request has an origin header: 'http://localhost:5173'.
+2025-02-10 00:17:53.441 -04:00 [INF] CORS policy execution successful.
+2025-02-10 00:17:53.441 -04:00 [DBG] AuthenticationScheme: Bearer was not authenticated.
+2025-02-10 00:17:53.441 -04:00 [INF] Executing endpoint 'GIGANTECLIENTCORE.Controllers.BannerController.GetBanner (GIGANTECLIENTCORE)'
+2025-02-10 00:17:53.441 -04:00 [INF] Route matched with {action = "GetBanner", controller = "Banner"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetBanner() on controller GIGANTECLIENTCORE.Controllers.BannerController (GIGANTECLIENTCORE).
+2025-02-10 00:17:53.441 -04:00 [DBG] Execution plan of authorization filters (in the following order): ["None"]
+2025-02-10 00:17:53.441 -04:00 [DBG] Execution plan of resource filters (in the following order): ["None"]
+2025-02-10 00:17:53.441 -04:00 [DBG] Execution plan of action filters (in the following order): ["Microsoft.AspNetCore.Mvc.ModelBinding.UnsupportedContentTypeFilter (Order: -3000)","Microsoft.AspNetCore.Mvc.Infrastructure.ModelStateInvalidFilter (Order: -2000)"]
+2025-02-10 00:17:53.441 -04:00 [DBG] Execution plan of exception filters (in the following order): ["None"]
+2025-02-10 00:17:53.441 -04:00 [DBG] Execution plan of result filters (in the following order): ["Microsoft.AspNetCore.Mvc.Infrastructure.ClientErrorResultFilter (Order: -2000)"]
+2025-02-10 00:17:53.441 -04:00 [DBG] Executing controller factory for controller GIGANTECLIENTCORE.Controllers.BannerController (GIGANTECLIENTCORE)
+2025-02-10 00:17:53.442 -04:00 [DBG] Executed controller factory for controller GIGANTECLIENTCORE.Controllers.BannerController (GIGANTECLIENTCORE)
+2025-02-10 00:17:53.442 -04:00 [INF] Executing action method GIGANTECLIENTCORE.Controllers.BannerController.GetBanner (GIGANTECLIENTCORE) - Validation state: "Valid"
+2025-02-10 00:17:53.442 -04:00 [INF] Obteniendo Imagenes...
+2025-02-10 00:17:53.442 -04:00 [DBG] Entity Framework Core 9.0.1 initialized 'MyDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:9.0.1' with options: EngineType=SqlServer 
+2025-02-10 00:17:53.442 -04:00 [DBG] Creating DbConnection.
+2025-02-10 00:17:53.442 -04:00 [DBG] Created DbConnection. (0ms).
+2025-02-10 00:17:53.442 -04:00 [DBG] Opening connection to database 'GIGANTEAPIS' on server 'localhost'.
+2025-02-10 00:17:53.442 -04:00 [DBG] Opened connection to database 'GIGANTEAPIS' on server 'localhost'.
+2025-02-10 00:17:53.442 -04:00 [DBG] Creating DbCommand for 'ExecuteReader'.
+2025-02-10 00:17:53.442 -04:00 [DBG] Created DbCommand for 'ExecuteReader' (0ms).
+2025-02-10 00:17:53.442 -04:00 [DBG] Initialized DbCommand for 'ExecuteReader' (0ms).
+2025-02-10 00:17:53.442 -04:00 [DBG] Executing DbCommand [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [b].[Id], [b].[Active], [b].[CreatedAt], [b].[ImageUrl], [b].[OrderIndex]
+FROM [Banners] AS [b]
+ORDER BY [b].[OrderIndex]
+2025-02-10 00:17:53.446 -04:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [b].[Id], [b].[Active], [b].[CreatedAt], [b].[ImageUrl], [b].[OrderIndex]
+FROM [Banners] AS [b]
+ORDER BY [b].[OrderIndex]
+2025-02-10 00:17:53.446 -04:00 [DBG] Context 'MyDbContext' started tracking 'Banner' entity. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see key values.
+2025-02-10 00:17:53.446 -04:00 [DBG] Context 'MyDbContext' started tracking 'Banner' entity. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see key values.
+2025-02-10 00:17:53.446 -04:00 [DBG] Closing data reader to 'GIGANTEAPIS' on server 'localhost'.
+2025-02-10 00:17:53.446 -04:00 [DBG] A data reader for 'GIGANTEAPIS' on server 'localhost' is being disposed after spending 0ms reading results.
+2025-02-10 00:17:53.446 -04:00 [DBG] Closing connection to database 'GIGANTEAPIS' on server 'localhost'.
+2025-02-10 00:17:53.446 -04:00 [DBG] Closed connection to database 'GIGANTEAPIS' on server 'localhost' (0ms).
+2025-02-10 00:17:53.446 -04:00 [INF] Executed action method GIGANTECLIENTCORE.Controllers.BannerController.GetBanner (GIGANTECLIENTCORE), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 4.7615ms.
+2025-02-10 00:17:53.446 -04:00 [DBG] List of registered output formatters, in the following order: ["Microsoft.AspNetCore.Mvc.Formatters.HttpNoContentOutputFormatter","Microsoft.AspNetCore.Mvc.Formatters.StringOutputFormatter","Microsoft.AspNetCore.Mvc.Formatters.StreamOutputFormatter","Microsoft.AspNetCore.Mvc.Formatters.NewtonsoftJsonOutputFormatter","Microsoft.AspNetCore.Mvc.Formatters.XmlDataContractSerializerOutputFormatter"]
+2025-02-10 00:17:53.446 -04:00 [DBG] No information found on request to perform content negotiation.
+2025-02-10 00:17:53.446 -04:00 [DBG] Attempting to select an output formatter without using a content type as no explicit content types were specified for the response.
+2025-02-10 00:17:53.446 -04:00 [DBG] Attempting to select the first formatter in the output formatters list which can write the result.
+2025-02-10 00:17:53.446 -04:00 [DBG] Selected output formatter 'Microsoft.AspNetCore.Mvc.Formatters.NewtonsoftJsonOutputFormatter' and content type 'application/json' to write the response.
+2025-02-10 00:17:53.446 -04:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[GIGANTECLIENTCORE.Models.Banner, GIGANTECLIENTCORE, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-02-10 00:17:53.448 -04:00 [INF] Executed action GIGANTECLIENTCORE.Controllers.BannerController.GetBanner (GIGANTECLIENTCORE) in 6.2382ms
+2025-02-10 00:17:53.448 -04:00 [INF] Executed endpoint 'GIGANTECLIENTCORE.Controllers.BannerController.GetBanner (GIGANTECLIENTCORE)'
+2025-02-10 00:17:53.448 -04:00 [DBG] Connection id "0HNA96JKKGP6I" completed keep alive response.
+2025-02-10 00:17:53.449 -04:00 [DBG] 'MyDbContext' disposed.
+2025-02-10 00:17:53.451 -04:00 [DBG] Disposing connection to database 'GIGANTEAPIS' on server 'localhost'.
+2025-02-10 00:17:53.451 -04:00 [DBG] Disposed connection to database '' on server '' (1ms).
+2025-02-10 00:17:53.452 -04:00 [INF] Request finished HTTP/1.1 GET http://localhost:5204/api/Banner - 200 268 application/json; charset=utf-8 10.5536ms
+2025-02-10 00:40:03.329 -04:00 [DBG] Connection id "0HNA96JKKGP6J" received FIN.
+2025-02-10 00:40:03.341 -04:00 [DBG] Connection id "0HNA96JKKGP6J" disconnecting.
+2025-02-10 00:40:03.341 -04:00 [DBG] Connection id "0HNA96JKKGP6J" sending FIN because: "The Socket transport's send loop completed gracefully."
+2025-02-10 00:40:03.362 -04:00 [DBG] Connection id "0HNA96JKKGP6J" stopped.
+2025-02-10 00:40:20.689 -04:00 [DBG] Connection id "0HNA96JKKGP6I" disconnecting.
+2025-02-10 00:40:20.690 -04:00 [DBG] Connection id "0HNA96JKKGP6I" stopped.
+2025-02-10 00:40:20.690 -04:00 [DBG] Connection id "0HNA96JKKGP6I" sending FIN because: "The Socket transport's send loop completed gracefully."
+2025-02-10 13:59:52.748 -04:00 [INF] Application is shutting down...
+2025-02-10 13:59:52.752 -04:00 [DBG] Hosting stopping
+2025-02-10 13:59:52.766 -04:00 [DBG] Hosting stopped
