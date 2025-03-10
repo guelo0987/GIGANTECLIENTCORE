@@ -7,12 +7,14 @@ namespace GIGANTECLIENTCORE.Utils;
 public class AdminCurriculumMedia
 {
     private readonly MyDbContext _context;
-    private readonly string _bucketName = "giganteimages";
-    private readonly string _folderPath = "ImageGigante/Curriculums/";
+    private readonly string _bucketName ;
+    private readonly string _folderPath ;
 
     public AdminCurriculumMedia(MyDbContext context)
     {
         _context = context;
+        _bucketName = Environment.GetEnvironmentVariable("GOOGLE_STORAGE_BUCKET");
+        _folderPath = Environment.GetEnvironmentVariable("CURRICULUM_FILES_PATH");
     }
 
     public async Task<object> Upload(IFormFile file, string cedula)

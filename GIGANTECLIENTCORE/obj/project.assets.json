@@ -60,6 +60,24 @@
           }
         }
       },
+      "DotEnv.Core/3.1.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/DotEnv.Core.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/DotEnv.Core.dll": {
+            "related": ".xml"
+          }
+        },
+        "resource": {
+          "lib/netstandard2.0/es/DotEnv.Core.resources.dll": {
+            "locale": "es"
+          }
+        }
+      },
       "Google.Api.Gax/4.8.0": {
         "type": "package",
         "dependencies": {
@@ -2235,6 +2253,23 @@
         "lib/netstandard2.1/BCrypt.Net-Next.dll",
         "lib/netstandard2.1/BCrypt.Net-Next.xml",
         "readme.md"
+      ]
+    },
+    "DotEnv.Core/3.1.0": {
+      "sha512": "zy7ybm9fHLoN4grng0tfUYnFQ6HIizb3jPc1Z6bC2jlJqxLkaVfCfHhnUVG/5viufM+Cr1QI/IGxWXcsxzgsXA==",
+      "type": "package",
+      "path": "dotenv.core/3.1.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE",
+        "README.md",
+        "dotenv-icon-nuget.png",
+        "dotenv.core.3.1.0.nupkg.sha512",
+        "dotenv.core.nuspec",
+        "lib/netstandard2.0/DotEnv.Core.dll",
+        "lib/netstandard2.0/DotEnv.Core.xml",
+        "lib/netstandard2.0/es/DotEnv.Core.resources.dll"
       ]
     },
     "Google.Api.Gax/4.8.0": {
@@ -6133,6 +6168,7 @@
   "projectFileDependencyGroups": {
     "net9.0": [
       "BCrypt.Net-Next >= 4.0.3",
+      "DotEnv.Core >= 3.1.0",
       "Google.Cloud.Storage.V1 >= 4.10.0",
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 9.0.1",
       "Microsoft.AspNetCore.JsonPatch >= 9.0.1",
@@ -6196,6 +6232,10 @@
           "BCrypt.Net-Next": {
             "target": "Package",
             "version": "[4.0.3, )"
+          },
+          "DotEnv.Core": {
+            "target": "Package",
+            "version": "[3.1.0, )"
           },
           "Google.Cloud.Storage.V1": {
             "target": "Package",

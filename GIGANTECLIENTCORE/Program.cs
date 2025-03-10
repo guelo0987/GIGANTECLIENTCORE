@@ -7,18 +7,29 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.FileProviders;
 using System.IO;
+using DotEnv.Core;
 using GIGANTECLIENTCORE.Context;
 using GIGANTECLIENTCORE.Utils;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.OpenApi.Models;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
+new EnvLoader()
+.AddEnvFile("development.env")
+.Load();
+
+
+var config = 
+    new ConfigurationBuilder()
+        .AddEnvironmentVariables()
+        .Build();
 
 //Logs Configuración
-Log.Logger = new LoggerConfiguration().MinimumLevel.Debug().WriteTo
+Log.Logger = new LoggerConfiguration().MinimumLevel.Information().WriteTo
     .File("logs/GiganteClienteCoreLogs.txt", rollingInterval: RollingInterval.Day).CreateLogger();
 
 builder.Host.UseSerilog();
@@ -27,8 +38,9 @@ builder.Host.UseSerilog();
 
 
 //Configuracion de la base de datos 
+// 2. Configuración de base de datos
 builder.Services.AddDbContext<MyDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(Environment.GetEnvironmentVariable("DATA_BASE_CONNECTION_STRING")));
 
 
 //Controlador Servicios
@@ -55,9 +67,10 @@ builder.Services.AddAuthentication(options =>
             ValidateAudience = true,
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
-            ValidIssuer = builder.Configuration["Jwt:Issuer"],
-            ValidAudience = builder.Configuration["Jwt:Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+            ValidIssuer = Environment.GetEnvironmentVariable("JWT_ISSUER"),
+            ValidAudience = Environment.GetEnvironmentVariable("JWT_AUDIENCE"),
+            IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("JWT_KEY")))
         }; 
         
     });
@@ -120,36 +133,37 @@ builder.Services.AddCors(options =>
             .AllowCredentials());
 });
 
+var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
+
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ListenAnyIP(int.Parse(port));
+});
+
+builder.Services.AddResponseCompression(options =>
+{
+    options.EnableForHttps = true;
+    options.Providers.Add<BrotliCompressionProvider>();
+    options.Providers.Add<GzipCompressionProvider>();
+});
 
 builder.Services.Configure<FormOptions>(options =>
 {
     options.MultipartBodyLengthLimit = 10485760; // 10MB
 });
 
-// En ConfigureServices
-builder.Services.Configure<ForwardedHeadersOptions>(options =>
-{
-    options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
-});
-
-
-
 
 var app = builder.Build();
 
-// En Configure
-app.UseStaticFiles(new StaticFileOptions
+app.UseSwagger();
+app.UseSwaggerUI(c => 
 {
-    FileProvider = new PhysicalFileProvider(
-        Path.Combine("/Users/miguelcruz/ImageGigante/Curriculums")),
-    RequestPath = "/Curriculums"
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "GIGANTE CLIENTES API v1");
+    c.ConfigObject.DisplayRequestDuration = true;
+    c.RoutePrefix = "swagger"; // Esto es importante
 });
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+
 
 app.UseRouting();
 app.UseCors("AllowReactApp");
@@ -157,10 +171,96 @@ app.UseHttpsRedirection();
 //Usamos la autenticación antes de la autorización  
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseResponseCompression();
 
-app.UseEndpoints(endpoints =>
+
+app.UseExceptionHandler(appBuilder =>
 {
-    endpoints.MapControllers();
+    appBuilder.Run(async context =>
+    {
+        context.Response.StatusCode = 500;
+        context.Response.ContentType = "application/json";
+        
+        var exceptionHandlerFeature = context.Features.Get<Microsoft.AspNetCore.Diagnostics.IExceptionHandlerFeature>();
+        if (exceptionHandlerFeature != null)
+        {
+            var exception = exceptionHandlerFeature.Error;
+            Log.Error(exception, "Error no manejado");
+            
+            await context.Response.WriteAsync(JsonConvert.SerializeObject(new 
+            {
+                error = "Se produjo un error interno",
+                detail = app.Environment.IsDevelopment() ? exception.ToString() : null
+            }));
+        }
+    });
+});
+
+app.MapControllers();
+
+app.MapGet("/", () => Results.Redirect("/swagger"));
+
+app.MapGet("/api/diagnostico/sqltest", async () => 
+{
+    try {
+        var connectionString = Environment.GetEnvironmentVariable("DATA_BASE_CONNECTION_STRING");
+        var result = "No se intentó la conexión";
+        
+        if (!string.IsNullOrEmpty(connectionString))
+        {
+            try {
+                using (var connection = new Microsoft.Data.SqlClient.SqlConnection(connectionString))
+                {
+                    await connection.OpenAsync();
+                    result = "Conexión exitosa";
+                    
+                    // Intentar una consulta simple
+                    using (var command = new Microsoft.Data.SqlClient.SqlCommand("SELECT @@VERSION", connection))
+                    {
+                        var version = await command.ExecuteScalarAsync();
+                        result += $" - Versión: {version}";
+                    }
+                }
+            }
+            catch (Exception ex) {
+                result = $"Error: {ex.Message}";
+                if (ex.InnerException != null) {
+                    result += $" | Inner: {ex.InnerException.Message}";
+                }
+            }
+        }
+        
+        return Results.Ok(new { 
+            TestResult = result
+        });
+    }
+    catch (Exception ex) {
+        return Results.Problem(ex.ToString());
+    }
+});
+
+app.MapGet("/api/diagnostico/external-ip", async () => 
+{
+    try {
+        string externalIp = "No se pudo determinar";
+        
+        try {
+            using (var httpClient = new HttpClient())
+            {
+                externalIp = await httpClient.GetStringAsync("https://api.ipify.org");
+            }
+        }
+        catch (Exception ex) {
+            externalIp = $"Error: {ex.Message}";
+        }
+        
+        return Results.Ok(new { 
+            ExternalIp = externalIp
+        });
+    }
+    catch (Exception ex) {
+        return Results.Problem(ex.ToString());
+    }
 });
 
 app.Run();

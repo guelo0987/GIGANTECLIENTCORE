@@ -9,6 +9,7 @@
       "GIGANTECLIENTCORE/1.0.0": {
         "dependencies": {
           "BCrypt.Net-Next": "4.0.3",
+          "DotEnv.Core": "3.1.0",
           "Google.Cloud.Storage.V1": "4.10.0",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "9.0.1",
           "Microsoft.AspNetCore.JsonPatch": "9.0.1",
@@ -68,6 +69,19 @@
           "lib/net6.0/BCrypt.Net-Next.dll": {
             "assemblyVersion": "4.0.3.0",
             "fileVersion": "4.0.3.0"
+          }
+        }
+      },
+      "DotEnv.Core/3.1.0": {
+        "runtime": {
+          "lib/netstandard2.0/DotEnv.Core.dll": {
+            "assemblyVersion": "3.1.0.0",
+            "fileVersion": "3.1.0.0"
+          }
+        },
+        "resources": {
+          "lib/netstandard2.0/es/DotEnv.Core.resources.dll": {
+            "locale": "es"
           }
         }
       },
@@ -1404,6 +1418,13 @@
       "sha512": "sha512-W+U9WvmZQgi5cX6FS5GDtDoPzUCV4LkBLkywq/kRZhuDwcbavOzcDAr3LXJFqHUi952Yj3LEYoWW0jbEUQChsA==",
       "path": "bcrypt.net-next/4.0.3",
       "hashPath": "bcrypt.net-next.4.0.3.nupkg.sha512"
+    },
+    "DotEnv.Core/3.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-zy7ybm9fHLoN4grng0tfUYnFQ6HIizb3jPc1Z6bC2jlJqxLkaVfCfHhnUVG/5viufM+Cr1QI/IGxWXcsxzgsXA==",
+      "path": "dotenv.core/3.1.0",
+      "hashPath": "dotenv.core.3.1.0.nupkg.sha512"
     },
     "Google.Api.Gax/4.8.0": {
       "type": "package",

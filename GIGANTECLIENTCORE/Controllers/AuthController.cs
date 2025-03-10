@@ -58,7 +58,7 @@ namespace GIGANTECLIENTCORE.Controllers
             // Crear los claims para el token JWT
             var claims = new[]
             {
-                new Claim(JwtRegisteredClaimNames.Sub, _configuration["Jwt:Subject"]),
+                new Claim(JwtRegisteredClaimNames.Sub, Environment.GetEnvironmentVariable("JWT_SUBJECT")),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim("Id", client.Id.ToString()),
                 new Claim(ClaimTypes.Role, client.Rol.Name)
@@ -138,7 +138,7 @@ public async Task<IActionResult> Register([FromBody] RegisterDTO registerRequest
     // Crear los claims para el token JWT
     var claims = new[]
     {
-        new Claim(JwtRegisteredClaimNames.Sub, _configuration["Jwt:Subject"]),
+        new Claim(JwtRegisteredClaimNames.Sub, Environment.GetEnvironmentVariable("JWT_SUBJECT")),
         new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
         new Claim("Id", usuario.Id.ToString()),
         new Claim(ClaimTypes.Role, rol.Name)
@@ -169,12 +169,15 @@ public async Task<IActionResult> Register([FromBody] RegisterDTO registerRequest
         // Método privado para generar el Token JWT
         private IActionResult GenerateToken(Claim[] claims, UserClienteDTO userClienteDto, string role)
         {
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+            var jwtKey = Environment.GetEnvironmentVariable("JWT_KEY") ?? 
+                         throw new InvalidOperationException("JWT_KEY not found in environment variables");
+            
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey));
             var signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(
-                issuer: _configuration["Jwt:Issuer"],
-                audience: _configuration["Jwt:Audience"],
+                issuer: Environment.GetEnvironmentVariable("JWT_ISSUER"),
+                audience: Environment.GetEnvironmentVariable("JWT_AUDIENCE"),
                 claims: claims,
                 expires: DateTime.UtcNow.AddMinutes(60),
                 signingCredentials: signIn
