@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("GIGANTECLIENTCORE")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6ee026e5ca79d37543033521af2a1f5efe526474")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a878a661cf04e414dda485496335b8a7c00e538b")]
 [assembly: System.Reflection.AssemblyProductAttribute("GIGANTECLIENTCORE")]
 [assembly: System.Reflection.AssemblyTitleAttribute("GIGANTECLIENTCORE")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

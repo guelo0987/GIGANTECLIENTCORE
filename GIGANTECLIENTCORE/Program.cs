@@ -39,6 +39,8 @@ builder.Host.UseSerilog();
 
 //Configuracion de la base de datos 
 // 2. Configuración de base de datos
+var user = Environment.GetEnvironmentVariable("DB_USER");
+var password = Environment.GetEnvironmentVariable("DB_PASSWORD");
 builder.Services.AddDbContext<MyDbContext>(options =>
     options.UseSqlServer(Environment.GetEnvironmentVariable("DATA_BASE_CONNECTION_STRING")));
 
