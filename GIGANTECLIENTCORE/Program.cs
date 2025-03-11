@@ -8,20 +8,19 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.FileProviders;
 using System.IO;
 using DotEnv.Core;
-using GIGANTECLIENTCORE.Context;
 using GIGANTECLIENTCORE.Utils;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.OpenApi.Models;
-
+using Google.Cloud.Storage.V1;
+using Microsoft.Data.SqlClient;
 
 var builder = WebApplication.CreateBuilder(args);
 
 new EnvLoader()
-.AddEnvFile("development.env")
-.Load();
-
+    .AddEnvFile("development.env")
+    .Load();
 
 var config = 
     new ConfigurationBuilder()
@@ -34,22 +33,52 @@ Log.Logger = new LoggerConfiguration().MinimumLevel.Information().WriteTo
 
 builder.Host.UseSerilog();
 
+// Google Cloud SQL Connection String Builder
+string BuildGoogleCloudSqlConnectionString()
+{
+    var instanceConnectionName = Environment.GetEnvironmentVariable("INSTANCE_CONNECTION_NAME");
+    var dbUser = Environment.GetEnvironmentVariable("DB_USER") ?? "";
+    var dbPass = Environment.GetEnvironmentVariable("DB_PASS");
+    var dbName = Environment.GetEnvironmentVariable("DB_NAME");
+    
+    // Para desarrollo local con Cloud SQL Proxy
+    // El proxy expone la instancia en localhost:1433
+    var connectionStringBuilder = new SqlConnectionStringBuilder
+    {
+        DataSource = "127.0.0.1,1433",  // El proxy mapea a localhost
+        UserID = dbUser,
+        Password = dbPass,
+        InitialCatalog = dbName,
+        TrustServerCertificate = true,
+        Encrypt = true,
+        ConnectTimeout = 30
+    };
 
-
+    return connectionStringBuilder.ConnectionString;
+}
 
 //Configuracion de la base de datos 
-// 2. Configuración de base de datos
-builder.Services.AddDbContext<MyDbContext>(options =>
-    options.UseSqlServer(Environment.GetEnvironmentVariable("DATA_BASE_CONNECTION_STRING")));
-
+// Use Google Cloud SQL connection if environment variables are set
+if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("INSTANCE_CONNECTION_NAME")))
+{
+    builder.Services.AddDbContext<MyDbContext>(options =>
+        options.UseSqlServer(BuildGoogleCloudSqlConnectionString()));
+    
+    Log.Information("Using Google Cloud SQL connection");
+}
+else
+{
+    // Fall back to the original connection string
+    builder.Services.AddDbContext<MyDbContext>(options =>
+        options.UseSqlServer(Environment.GetEnvironmentVariable("DATA_BASE_CONNECTION_STRING")));
+    
+    Log.Information("Using standard SQL Server connection");
+}
 
 //Controlador Servicios
 builder.Services.AddControllers(option => option.ReturnHttpNotAcceptable = true)
     .AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore)
     .AddXmlDataContractSerializerFormatters();
-
-
-
 
 //Configuracion JWT
 builder.Services.AddAuthentication(options =>
@@ -72,19 +101,13 @@ builder.Services.AddAuthentication(options =>
             IssuerSigningKey = new SymmetricSecurityKey(
                 Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("JWT_KEY")))
         }; 
-        
     });
-
 
 //Configuracion de politicas de autorización
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("RequireClienteRole", policy => policy.RequireRole("Cliente"));
-    ;
 });
-
-
-
 
 //Configuracion Swagger
 builder.Services.AddEndpointsApiExplorer();
@@ -116,11 +139,7 @@ builder.Services.AddSwaggerGen(c =>
             new string[] {}
         }
     });
-    
-    
 });
-
-
 
 //Configuración Cors para poder hacerlo con ReactJS
 builder.Services.AddCors(options =>
@@ -152,7 +171,6 @@ builder.Services.Configure<FormOptions>(options =>
     options.MultipartBodyLengthLimit = 10485760; // 10MB
 });
 
-
 var app = builder.Build();
 
 app.UseSwagger();
@@ -163,8 +181,6 @@ app.UseSwaggerUI(c =>
     c.RoutePrefix = "swagger"; // Esto es importante
 });
 
-
-
 app.UseRouting();
 app.UseCors("AllowReactApp");
 app.UseHttpsRedirection();
@@ -172,7 +188,6 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseResponseCompression();
-
 
 app.UseExceptionHandler(appBuilder =>
 {
@@ -199,6 +214,56 @@ app.UseExceptionHandler(appBuilder =>
 app.MapControllers();
 
 app.MapGet("/", () => Results.Redirect("/swagger"));
+
+// Add a diagnostic endpoint for Google Cloud SQL connection
+app.MapGet("/api/diagnostico/cloudsqltest", async () => 
+{
+    try {
+        string connectionString = "";
+        if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("INSTANCE_CONNECTION_NAME")))
+        {
+            connectionString = BuildGoogleCloudSqlConnectionString();
+        }
+        else
+        {
+            connectionString = Environment.GetEnvironmentVariable("DATA_BASE_CONNECTION_STRING");
+        }
+        
+        var result = "No se intentó la conexión";
+        
+        if (!string.IsNullOrEmpty(connectionString))
+        {
+            try {
+                using (var connection = new Microsoft.Data.SqlClient.SqlConnection(connectionString))
+                {
+                    await connection.OpenAsync();
+                    result = "Conexión exitosa";
+                    
+                    // Intentar una consulta simple
+                    using (var command = new Microsoft.Data.SqlClient.SqlCommand("SELECT @@VERSION", connection))
+                    {
+                        var version = await command.ExecuteScalarAsync();
+                        result += $" - Versión: {version}";
+                    }
+                }
+            }
+            catch (Exception ex) {
+                result = $"Error: {ex.Message}";
+                if (ex.InnerException != null) {
+                    result += $" | Inner: {ex.InnerException.Message}";
+                }
+            }
+        }
+        
+        return Results.Ok(new { 
+            TestResult = result,
+            IsCloudSql = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("INSTANCE_CONNECTION_NAME"))
+        });
+    }
+    catch (Exception ex) {
+        return Results.Problem(ex.ToString());
+    }
+});
 
 app.MapGet("/api/diagnostico/sqltest", async () => 
 {
@@ -264,4 +329,3 @@ app.MapGet("/api/diagnostico/external-ip", async () =>
 });
 
 app.Run();
-

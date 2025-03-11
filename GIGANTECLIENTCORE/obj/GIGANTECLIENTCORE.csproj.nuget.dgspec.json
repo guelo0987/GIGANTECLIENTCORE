@@ -53,6 +53,10 @@
               "target": "Package",
               "version": "[3.1.0, )"
             },
+            "Google.Apis.SQLAdmin.v1": {
+              "target": "Package",
+              "version": "[1.69.0.3709, )"
+            },
             "Google.Cloud.Storage.V1": {
               "target": "Package",
               "version": "[4.10.0, )"
