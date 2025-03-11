@@ -23,12 +23,6 @@ steps:
       - '$_GCR_HOSTNAME/$PROJECT_ID/$_SERVICE_NAME:$COMMIT_SHA'
       - '--region'
       - $_DEPLOY_REGION
-      - '--add-cloudsql-instances'
-      - 'tranquil-marker-452523-a1:us-central1:gigantedbtest'
-      - '--service-account'
-      - 'cloud-run-sa@tranquil-marker-452523-a1.iam.gserviceaccount.com'
-      - '--set-env-vars'
-      - 'DATA_BASE_CONNECTION_STRING=Data Source=127.0.0.1,1433;Initial Catalog=GIGANTEAPIS;User ID=sqlserver;Password=Razerteam2004*;TrustServerCertificate=True'
     entrypoint: gcloud
     id: Deploy
 timeout: 1200s
