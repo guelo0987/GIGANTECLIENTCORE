@@ -108,14 +108,14 @@ public class ProductoController : ControllerBase
     [HttpGet("destacados/excluyendoCeramicas")]
     public async Task<IActionResult> GetProductosDestacadosExcluyendoCeramicas()
     {
-        const int categoriaCeramicaId = 1006;
+        const int categoriaCeramicaId = 5;
     
         var productos = await _db.Productos
             .Include(p => p.Categoria)
             .ThenInclude(c => c.SubCategoria)
             .Where(p => p.EsDestacado == true 
-                        && p.CategoriaId != categoriaCeramicaId)
-            .ToListAsync();
+                        && p.CategoriaId == categoriaCeramicaId || !p.Nombre.Contains("Ceramica"))
+            .ToListAsync(); 
 
         if (!productos.Any())
         {
@@ -130,13 +130,13 @@ public class ProductoController : ControllerBase
     [HttpGet("destacados/ceramicas")]
     public async Task<IActionResult> GetCeramicasDestacadas()
     {
-        const int categoriaCeramicaId = 1006;
+        const int categoriaCeramicaId = 5;
     
         var productos = await _db.Productos
             .Include(p => p.Categoria)
             .ThenInclude(c => c.SubCategoria)
             .Where(p => p.EsDestacado == true 
-                        && p.CategoriaId == categoriaCeramicaId)
+                        && p.CategoriaId == categoriaCeramicaId || p.Nombre.Contains("Ceramica"))
             .ToListAsync();
 
         if (!productos.Any())
@@ -150,10 +150,10 @@ public class ProductoController : ControllerBase
     [HttpGet("marcas/notceramicas")]
     public async Task<IActionResult> GetMarcasExcluyendoCategoria1006()
     {
-        const int categoriaCeramicaId = 1006; // ID de la categoría a excluir
+        const int categoriaCeramicaId = 5; // ID de la categoría a excluir
     
         var marcas = await _db.Productos
-            .Where(p => p.CategoriaId != categoriaCeramicaId) // Filtramos por ID
+            .Where(p => p.CategoriaId != categoriaCeramicaId || !p.Nombre.Contains("Ceramica")) // Filtramos por ID
             .Select(p => p.Marca)
             .Distinct()
             .ToListAsync();
@@ -171,10 +171,10 @@ public class ProductoController : ControllerBase
     [HttpGet("marcas/yesceramicas")]
     public async Task<IActionResult> GetMarcasDeCeramicas()
     {
-        const int categoriaCeramicaId = 1006;
+        const int categoriaCeramicaId = 5;
     
         var marcas = await _db.Productos
-            .Where(p => p.CategoriaId == categoriaCeramicaId)
+            .Where(p => p.CategoriaId == categoriaCeramicaId || p.Nombre.Contains("Ceramica"))
             .Select(p => p.Marca)
             .Distinct()
             .ToListAsync();

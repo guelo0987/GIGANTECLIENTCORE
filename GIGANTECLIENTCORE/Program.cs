@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.OpenApi.Models;
 using Google.Cloud.Storage.V1;
 using Microsoft.Data.SqlClient;
+using Npgsql;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,28 +34,16 @@ Log.Logger = new LoggerConfiguration().MinimumLevel.Information().WriteTo
 
 builder.Host.UseSerilog();
 
-// Google Cloud SQL Connection String Builder
-string BuildGoogleCloudSqlConnectionString()
+// Google Cloud SQL Connection String Builder for PostgreSQL
+string BuildGoogleCloudPostgreSqlConnectionString()
 {
     var instanceConnectionName = Environment.GetEnvironmentVariable("INSTANCE_CONNECTION_NAME");
     var dbUser = Environment.GetEnvironmentVariable("DB_USER") ?? "";
     var dbPass = Environment.GetEnvironmentVariable("DB_PASS");
     var dbName = Environment.GetEnvironmentVariable("DB_NAME");
     
-    // Para desarrollo local con Cloud SQL Proxy
-    // El proxy expone la instancia en localhost:1433
-    var connectionStringBuilder = new SqlConnectionStringBuilder
-    {
-        DataSource = "127.0.0.1,1433",  // El proxy mapea a localhost
-        UserID = dbUser,
-        Password = dbPass,
-        InitialCatalog = dbName,
-        TrustServerCertificate = true,
-        Encrypt = true,
-        ConnectTimeout = 30
-    };
-
-    return connectionStringBuilder.ConnectionString;
+    // For development local with Cloud SQL Proxy
+    return $"Host=127.0.0.1;Port=5432;Database={dbName};Username={dbUser};Password={dbPass};";
 }
 
 //Configuracion de la base de datos 
@@ -62,17 +51,17 @@ string BuildGoogleCloudSqlConnectionString()
 if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("INSTANCE_CONNECTION_NAME")))
 {
     builder.Services.AddDbContext<MyDbContext>(options =>
-        options.UseSqlServer(BuildGoogleCloudSqlConnectionString()));
+        options.UseNpgsql(BuildGoogleCloudPostgreSqlConnectionString()));
     
-    Log.Information("Using Google Cloud SQL connection");
+    Log.Information("Using Google Cloud PostgreSQL connection");
 }
 else
 {
-    // Fall back to the original connection string
+    // Fall back to the standard PostgreSQL connection
     builder.Services.AddDbContext<MyDbContext>(options =>
-        options.UseSqlServer(Environment.GetEnvironmentVariable("DATA_BASE_CONNECTION_STRING")));
+        options.UseNpgsql(Environment.GetEnvironmentVariable("DATA_BASE_CONNECTION_STRING")));
     
-    Log.Information("Using standard SQL Server connection");
+    Log.Information("Using standard PostgreSQL connection");
 }
 
 //Controlador Servicios
@@ -222,7 +211,7 @@ app.MapGet("/api/diagnostico/cloudsqltest", async () =>
         string connectionString = "";
         if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("INSTANCE_CONNECTION_NAME")))
         {
-            connectionString = BuildGoogleCloudSqlConnectionString();
+            connectionString = BuildGoogleCloudPostgreSqlConnectionString();
         }
         else
         {
@@ -234,13 +223,13 @@ app.MapGet("/api/diagnostico/cloudsqltest", async () =>
         if (!string.IsNullOrEmpty(connectionString))
         {
             try {
-                using (var connection = new Microsoft.Data.SqlClient.SqlConnection(connectionString))
+                using (var connection = new NpgsqlConnection(connectionString))
                 {
                     await connection.OpenAsync();
                     result = "Conexión exitosa";
                     
-                    // Intentar una consulta simple
-                    using (var command = new Microsoft.Data.SqlClient.SqlCommand("SELECT @@VERSION", connection))
+                    // PostgreSQL version query
+                    using (var command = new NpgsqlCommand("SELECT version()", connection))
                     {
                         var version = await command.ExecuteScalarAsync();
                         result += $" - Versión: {version}";
@@ -268,19 +257,28 @@ app.MapGet("/api/diagnostico/cloudsqltest", async () =>
 app.MapGet("/api/diagnostico/sqltest", async () => 
 {
     try {
-        var connectionString = Environment.GetEnvironmentVariable("DATA_BASE_CONNECTION_STRING");
+        string connectionString = "";
+        if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("INSTANCE_CONNECTION_NAME")))
+        {
+            connectionString = BuildGoogleCloudPostgreSqlConnectionString();
+        }
+        else
+        {
+            connectionString = Environment.GetEnvironmentVariable("DATA_BASE_CONNECTION_STRING");
+        }
+        
         var result = "No se intentó la conexión";
         
         if (!string.IsNullOrEmpty(connectionString))
         {
             try {
-                using (var connection = new Microsoft.Data.SqlClient.SqlConnection(connectionString))
+                using (var connection = new NpgsqlConnection(connectionString))
                 {
                     await connection.OpenAsync();
                     result = "Conexión exitosa";
                     
-                    // Intentar una consulta simple
-                    using (var command = new Microsoft.Data.SqlClient.SqlCommand("SELECT @@VERSION", connection))
+                    // PostgreSQL version query
+                    using (var command = new NpgsqlCommand("SELECT version()", connection))
                     {
                         var version = await command.ExecuteScalarAsync();
                         result += $" - Versión: {version}";
@@ -296,7 +294,8 @@ app.MapGet("/api/diagnostico/sqltest", async () =>
         }
         
         return Results.Ok(new { 
-            TestResult = result
+            TestResult = result,
+            IsCloudSql = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("INSTANCE_CONNECTION_NAME"))
         });
     }
     catch (Exception ex) {

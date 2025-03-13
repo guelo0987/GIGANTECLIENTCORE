@@ -49,17 +49,30 @@ public partial class MyDbContext : DbContext
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder);
+        
+        // Set PostgreSQL conventions - lowercase table names
+        foreach (var entity in modelBuilder.Model.GetEntityTypes())
+        {
+            entity.SetTableName(entity.GetTableName().ToLower());
+            
+            // Use snake_case naming convention for PostgreSQL columns
+            foreach (var property in entity.GetProperties())
+            {
+                property.SetColumnName(property.GetColumnName().ToLower());
+            }
+        }
+        
         modelBuilder.Entity<Admin>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Admin__3214EC07A4E8858C");
-
-            entity.ToTable("Admin");
+            entity.ToTable("admin");
+            entity.HasKey(e => e.Id).HasName("PK_admin");
 
             entity.HasIndex(e => e.RolId, "IX_Admin_RolId");
 
             entity.Property(e => e.FechaIngreso)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime");
+                .HasDefaultValueSql("now()")
+                .HasColumnType("timestamp");
             entity.Property(e => e.Mail).HasMaxLength(100);
             entity.Property(e => e.Nombre).HasMaxLength(100);
             entity.Property(e => e.Password).HasMaxLength(100);
@@ -71,18 +84,30 @@ public partial class MyDbContext : DbContext
                 .OnDelete(DeleteBehavior.SetNull);
         });
 
-        
+        modelBuilder.Entity<Banner>(entity =>
+        {
+            entity.ToTable("banner");
+            entity.HasKey(e => e.Id);
+            
+            entity.Property(e => e.ImageUrl);
+            entity.Property(e => e.Active);
+            entity.Property(e => e.OrderIndex);
+            entity.Property(e => e.CreatedAt)
+                .HasColumnType("timestamp with time zone");
+        });
 
         modelBuilder.Entity<Categorium>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Categori__3214EC07791AF110");
+            entity.ToTable("categoria");
+            entity.HasKey(e => e.Id).HasName("PK_categoria");
 
             entity.Property(e => e.Nombre).HasMaxLength(100);
         });
 
         modelBuilder.Entity<Compañium>(entity =>
         {
-            entity.HasKey(e => e.Rnc).HasName("PK__Compañia__CAFF6951C669784F");
+            entity.ToTable("compañia");
+            entity.HasKey(e => e.Rnc).HasName("PK_compañia");
 
             entity.Property(e => e.Rnc)
                 .HasMaxLength(11)
@@ -125,8 +150,8 @@ public partial class MyDbContext : DbContext
                 .HasMaxLength(20)
                 .HasDefaultValue("Enviado");
             entity.Property(e => e.FechaEnvio)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime");
+                .HasDefaultValueSql("now()")
+                .HasColumnType("timestamp");
 
             entity.HasOne(d => d.DetalleSolicitud).WithMany(p => p.HistorialCorreos)
                 .HasForeignKey(d => d.DetalleSolicitudId)
@@ -192,8 +217,8 @@ public partial class MyDbContext : DbContext
             entity.HasIndex(e => e.UsuarioId, "IX_Solicitud_UsuarioId");
 
             entity.Property(e => e.FechaSolicitud)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime");
+                .HasDefaultValueSql("now()")
+                .HasColumnType("timestamp");
 
             entity.HasOne(d => d.Usuario).WithMany(p => p.Solicituds)
                 .HasForeignKey(d => d.UsuarioId)
@@ -217,9 +242,9 @@ public partial class MyDbContext : DbContext
 
         modelBuilder.Entity<UsuarioCliente>(entity =>
         {
+            entity.ToTable("usuario_cliente");
+            
             entity.HasKey(e => e.Id).HasName("PK__UsuarioC__3214EC07D79F99F6");
-
-            entity.ToTable("UsuarioCliente");
 
             entity.HasIndex(e => e.Rnc, "IX_UsuarioCliente_RNC");
 
@@ -231,8 +256,8 @@ public partial class MyDbContext : DbContext
             entity.Property(e => e.Dob).HasColumnName("DOB");
             entity.Property(e => e.Email).HasMaxLength(100);
             entity.Property(e => e.FechaIngreso)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime");
+                .HasDefaultValueSql("now()")
+                .HasColumnType("timestamp");
             entity.Property(e => e.Rnc)
                 .HasMaxLength(11)
                 .HasColumnName("RNC");
@@ -246,6 +271,9 @@ public partial class MyDbContext : DbContext
             entity.HasOne(d => d.Rol).WithMany(p => p.UsuarioClientes)
                 .HasForeignKey(d => d.RolId)
                 .OnDelete(DeleteBehavior.ClientSetNull);
+
+            entity.Property(e => e.Id)
+                .UseIdentityAlwaysColumn(); // PostgreSQL identity column
         });
 
         OnModelCreatingPartial(modelBuilder);
@@ -262,11 +290,11 @@ public partial class MyDbContext : DbContext
                 throw new InvalidOperationException("La cadena de conexión no está configurada");
             }
             
-            optionsBuilder.UseSqlServer(connectionString, options => 
+            optionsBuilder.UseNpgsql(connectionString, options => 
                 options.EnableRetryOnFailure(
                     maxRetryCount: 5,
                     maxRetryDelay: TimeSpan.FromSeconds(30),
-                    errorNumbersToAdd: null)
+                    errorCodesToAdd: null)
             );
         }
     }

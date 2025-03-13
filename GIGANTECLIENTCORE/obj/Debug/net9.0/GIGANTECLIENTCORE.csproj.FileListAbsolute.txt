@@ -196,3 +196,5 @@
 /Users/miguelcruz/Desktop/GIGANTECLIENTCORE/GIGANTECLIENTCORE/bin/Debug/net9.0/DotEnv.Core.dll
 /Users/miguelcruz/Desktop/GIGANTECLIENTCORE/GIGANTECLIENTCORE/bin/Debug/net9.0/es/DotEnv.Core.resources.dll
 /Users/miguelcruz/Desktop/GIGANTECLIENTCORE/GIGANTECLIENTCORE/bin/Debug/net9.0/Google.Apis.SQLAdmin.v1.dll
+/Users/miguelcruz/Desktop/GIGANTECLIENTCORE/GIGANTECLIENTCORE/bin/Debug/net9.0/Npgsql.dll
+/Users/miguelcruz/Desktop/GIGANTECLIENTCORE/GIGANTECLIENTCORE/bin/Debug/net9.0/Npgsql.EntityFrameworkCore.PostgreSQL.dll
