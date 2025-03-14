@@ -45,7 +45,7 @@ public partial class MyDbContext : DbContext
     
     public virtual DbSet<Carrito> Carrito { get; set; }
     
-    public virtual DbSet<Vacantes> Vacantes { get; set; }
+    public virtual DbSet<vacantes> vacantes { get; set; }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

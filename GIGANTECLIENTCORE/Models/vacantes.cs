@@ -1,6 +1,6 @@
 namespace GIGANTECLIENTCORE.Models;
 
-public class Vacantes
+public class vacantes
 {
     public int id { get; set; }
     

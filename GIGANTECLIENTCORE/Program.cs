@@ -160,6 +160,8 @@ builder.Services.Configure<FormOptions>(options =>
     options.MultipartBodyLengthLimit = 10485760; // 10MB
 });
 
+builder.Services.AddScoped<AdminCurriculumMedia>();
+
 var app = builder.Build();
 
 app.UseSwagger();

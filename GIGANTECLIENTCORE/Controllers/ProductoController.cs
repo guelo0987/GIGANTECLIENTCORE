@@ -108,13 +108,13 @@ public class ProductoController : ControllerBase
     [HttpGet("destacados/excluyendoCeramicas")]
     public async Task<IActionResult> GetProductosDestacadosExcluyendoCeramicas()
     {
-        const int categoriaCeramicaId = 5;
+        
     
         var productos = await _db.Productos
             .Include(p => p.Categoria)
             .ThenInclude(c => c.SubCategoria)
             .Where(p => p.EsDestacado == true 
-                        && p.CategoriaId == categoriaCeramicaId || !p.Nombre.Contains("Ceramica"))
+                        && !p.Nombre.Contains("Ceramica"))
             .ToListAsync(); 
 
         if (!productos.Any())

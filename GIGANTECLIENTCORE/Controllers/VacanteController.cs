@@ -45,7 +45,7 @@ namespace GIGANTECLIENTCORE.Controllers
 
                 var fileName = result.GetType().GetProperty("fileName")?.GetValue(result)?.ToString();
 
-                var vacante = new Vacantes
+                var vacante = new vacantes
                 {
                     nombre = dto.nombre,
                     cedula = dto.cedula,
@@ -60,11 +60,11 @@ namespace GIGANTECLIENTCORE.Controllers
                     NivelLaboral = dto.NivelLaboral,
                     OtroNivelLaboral = dto.OtroNivelLaboral,
                     CurriculumUrl = fileName,
-                    FechaAplicacion = DateTime.Now,
+                    FechaAplicacion = DateTime.UtcNow,
                     estado = "Pendiente"
                 };
 
-                _db.Vacantes.Add(vacante);
+                _db.vacantes.Add(vacante);
                 await _db.SaveChangesAsync();
 
                 return CreatedAtAction(
@@ -80,7 +80,7 @@ namespace GIGANTECLIENTCORE.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetVacanteById(int id)
         {
-            var vacante = await _db.Vacantes.FindAsync(id);
+            var vacante = await _db.vacantes.FindAsync(id);
             if (vacante == null)
             {
                 _logger.LogWarning("Vacante con ID {Id} no encontrada", id);
@@ -90,7 +90,7 @@ namespace GIGANTECLIENTCORE.Controllers
         }
         
 
-        private VacanteResponseDTO MapToResponseDto(Vacantes vacante)
+        private VacanteResponseDTO MapToResponseDto(vacantes vacante)
         {
             return new VacanteResponseDTO
             {
