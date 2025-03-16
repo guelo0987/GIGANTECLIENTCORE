@@ -14,11 +14,7 @@ namespace GIGANTECLIENTCORE.Controllers
         private readonly ILogger<VacantesController> _logger;
         private readonly MyDbContext _db;
 
-        public VacantesController(MyDbContext db, ILogger<VacantesController> logger)
-        {
-            _db = db;
-            _logger = logger;
-        }
+        
 
         [HttpPost]
         public async Task<IActionResult> CreateVacante([FromForm] CreateVacanteRequestDTO dto)
