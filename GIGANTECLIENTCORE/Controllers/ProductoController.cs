@@ -26,8 +26,9 @@ public class ProductoController : ControllerBase
         var products = await _db.Productos
             .Include(o => o.Categoria)
             .ThenInclude(o => o.SubCategoria)
+            .Where(p => !string.IsNullOrEmpty(p.ImageUrl))
             .ToListAsync();
-        _logger.LogInformation("Obteniendo Productos");
+        _logger.LogInformation("Obteniendo Productos con imágenes");
         return Ok(products);
     }
     
@@ -37,12 +38,12 @@ public class ProductoController : ControllerBase
         var products = await _db.Productos
             .Include(o => o.Categoria)
             .ThenInclude(o => o.SubCategoria)
-            .FirstOrDefaultAsync(u => u.Codigo == id);
+            .FirstOrDefaultAsync(u => u.Codigo == id && !string.IsNullOrEmpty(u.ImageUrl));
 
         if (products == null)
         {
-            _logger.LogError("Producto no Encontrado.");
-            return NotFound("Producto no encontrado.");
+            _logger.LogError("Producto no Encontrado o sin imagen.");
+            return NotFound("Producto no encontrado o sin imagen.");
         }
 
         return Ok(products);
@@ -54,13 +55,13 @@ public class ProductoController : ControllerBase
     {
         var productos = await _db.Productos
             .Include(s => s.Categoria)
-            .Where(s => s.CategoriaId == categoriaId)
+            .Where(s => s.CategoriaId == categoriaId && !string.IsNullOrEmpty(s.ImageUrl))
             .ToListAsync();
     
         if (!productos.Any())
         {
-            _logger.LogInformation($"No se encontraron Categorias en el Producto con el Codigo proporcionado", categoriaId);
-            return NotFound($"No se encontraron Productos para la categoría con Id {categoriaId}.");
+            _logger.LogInformation($"No se encontraron Productos con imágenes para la categoría con Id {categoriaId}");
+            return NotFound($"No se encontraron Productos con imágenes para la categoría con Id {categoriaId}.");
         }
     
         return Ok(productos);
@@ -74,13 +75,15 @@ public class ProductoController : ControllerBase
         var productos = await _db.Productos
             .Include(s => s.Categoria)
             .ThenInclude(o => o.SubCategoria)
-            .Where(s => s.CategoriaId == categoriaId && s.SubCategoriaId == subcategoriaId)
+            .Where(s => s.CategoriaId == categoriaId && 
+                       s.SubCategoriaId == subcategoriaId && 
+                       !string.IsNullOrEmpty(s.ImageUrl))
             .ToListAsync();
     
         if (!productos.Any())
         {
-            _logger.LogInformation($"No se encontraron Productos con la Subcategoria", subcategoriaId);
-            return NotFound($"No se encontraron Productos para la subcategoría con Id {subcategoriaId}.");
+            _logger.LogInformation($"No se encontraron Productos con imágenes para la subcategoría con Id {subcategoriaId}");
+            return NotFound($"No se encontraron Productos con imágenes para la subcategoría con Id {subcategoriaId}.");
         }
     
         return Ok(productos);
@@ -93,13 +96,13 @@ public class ProductoController : ControllerBase
         var productos = await _db.Productos
             .Include(s => s.Categoria)
             .Include(s => s.SubCategoria)
-            .Where(s => s.Marca == marca.ToLower())
+            .Where(s => s.Marca == marca.ToLower() && !string.IsNullOrEmpty(s.ImageUrl))
             .ToListAsync();
     
         if (!productos.Any())
         {
-            _logger.LogInformation($"No se encontraron Marcas en el Producto con la marca proporcionada", marca);
-            return NotFound($"No se encontraron Productos para la marca  {marca}.");
+            _logger.LogInformation($"No se encontraron Productos con imágenes para la marca {marca}");
+            return NotFound($"No se encontraron Productos con imágenes para la marca {marca}.");
         }
     
         return Ok(productos);
@@ -108,19 +111,18 @@ public class ProductoController : ControllerBase
     [HttpGet("destacados/excluyendoCeramicas")]
     public async Task<IActionResult> GetProductosDestacadosExcluyendoCeramicas()
     {
-        
-    
         var productos = await _db.Productos
             .Include(p => p.Categoria)
             .ThenInclude(c => c.SubCategoria)
-            .Where(p => p.EsDestacado == true 
-                        && !p.Nombre.Contains("Ceramica"))
+            .Where(p => p.EsDestacado == true && 
+                       !p.Categoria.Nombre.Contains("Ceramica") && 
+                       !string.IsNullOrEmpty(p.ImageUrl))
             .ToListAsync(); 
 
         if (!productos.Any())
         {
-            _logger.LogInformation("No se encontraron productos destacados excluyendo categoría 1006");
-            return NotFound("No se encontraron productos destacados en otras categorías");
+            _logger.LogInformation("No se encontraron productos destacados con imágenes excluyendo cerámicas");
+            return NotFound("No se encontraron productos destacados con imágenes en otras categorías");
         }
 
         return Ok(productos);
@@ -130,19 +132,20 @@ public class ProductoController : ControllerBase
     [HttpGet("destacados/ceramicas")]
     public async Task<IActionResult> GetCeramicasDestacadas()
     {
-        const int categoriaCeramicaId = 5;
+        
     
         var productos = await _db.Productos
             .Include(p => p.Categoria)
             .ThenInclude(c => c.SubCategoria)
-            .Where(p => p.EsDestacado == true 
-                        && p.CategoriaId == categoriaCeramicaId || p.Nombre.Contains("Ceramica"))
+            .Where(p => p.EsDestacado == true && 
+                         p.Categoria.Nombre.Contains("Ceramica") && 
+                        !string.IsNullOrEmpty(p.ImageUrl))
             .ToListAsync();
 
         if (!productos.Any())
         {
-            _logger.LogInformation("No se encontraron productos destacados de la categoría 1006");
-            return NotFound("No se encontraron productos destacados en cerámicas");
+            _logger.LogInformation("No se encontraron productos destacados con imágenes en cerámicas");
+            return NotFound("No se encontraron productos destacados con imágenes en cerámicas");
         }
 
         return Ok(productos);
@@ -183,6 +186,30 @@ public class ProductoController : ControllerBase
         {
             _logger.LogInformation("No se encontraron marcas en la categoría 1006");
             return NotFound("No hay marcas registradas para cerámicas");
+        }
+
+        return Ok(marcas);
+    }
+    
+    
+    
+    [HttpGet("marcas/{categoriaId}")]
+    public async Task<IActionResult> GetMarcasPorCategoria(int categoriaId)
+    {
+        
+
+        // Obtener marcas únicas de la categoría
+        var marcas = await _db.Productos
+            .Where(p => p.CategoriaId == categoriaId && p.Marca != null)
+            .Select(p => p.Marca)
+            .Distinct()
+            .OrderBy(m => m)
+            .ToListAsync();
+
+        if (!marcas.Any())
+        {
+            _logger.LogInformation($"No hay marcas disponibles para la categoría ID: {categoriaId}");
+            return NotFound($"No se encontraron marcas en la categoría seleccionada");
         }
 
         return Ok(marcas);
